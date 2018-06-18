@@ -107,6 +107,19 @@ $directory = $_GET['directory'];
 
   </script>
 
+  <!--  set theme colors  -->
+  <style type='text/css'>
+
+     .bar-top,
+     .fab > .item,
+     .files-container .item.active,
+     .files-container .directory .item.new,
+     .files-container .directory .item.new.active {
+       background-color: <?php echo $settings['themeColor'] ?>;
+     }
+
+  </style>
+
 </head>
 <body>
 

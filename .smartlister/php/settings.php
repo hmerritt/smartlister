@@ -19,7 +19,10 @@ $settings = [
     'fileUpload' => true,
 
     //  toggle ability to create folders
-    'folderCreation' => true
+    'folderCreation' => true,
+
+    //  change theme color (default = '#80D8FF')
+    'themeColor' => '#80D8FF'
 
 ];
 
