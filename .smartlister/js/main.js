@@ -458,7 +458,7 @@ $(document).ready(function () {
         changeBreadcrums(dirHash);
 
         //  change url (data | title | url)
-        window.history.pushState(null, 'Directory Lister', 'index.php?directory=' + directory);
+        window.history.pushState(null, 'Smartlister', 'index.php?directory=' + directory);
     }
 
     //  detect file extention
@@ -978,6 +978,7 @@ $(document).ready(function () {
         //  create new folder html
         var newFolderHTML = "\n          <div class='item active new flex'>\n              <svg viewBox=\"0 0 24 24\">\n                  <path d=\"M10,4L12,6H20A2,2 0 0,1 22,8V18A2,2 0 0,1 20,20H4C2.89,20 2,19.1 2,18V6C2,4.89 2.89,4 4,4H10M15,9V12H12V14H15V17H17V14H20V12H17V9H15Z\" />\n              </svg>\n              <div class='input'>\n                  <input placeholder='Folder name' type='text'>\n              </div>\n              <h3 class='last-modified'>-</h3>\n              <h3 class='size'>-</h3>\n          </div>\n        ";
         $('.files-container .directory[id=' + md5(directory) + '] .folders').prepend(newFolderHTML).find('input').focus().parent().parent().addClass('slideDown');
+
     }
 
     //  remove new folder
@@ -1015,7 +1016,7 @@ $(document).ready(function () {
     function newFolder(name) {
 
         //  replace illegal characters
-        name = name.replace(/[|&;$%@"<>()+,]/g, '');
+        name = name.replace(/[^a-z0-9._\-\!\#\[\]\=\+\;\:\~\(\)\^]/gi, '');
 
         //  make folder breadcrums
         var breadcrums = content[md5(directory)]['breadcrums'].slice();

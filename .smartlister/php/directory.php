@@ -35,6 +35,23 @@ $response = [
 ];
 
 
+//  make path fit for url
+$urlDir = '/';
+$count = count($breadcrums);
+foreach ($breadcrums as $breadcrum) {
+
+    //  skip root item
+    if ($breadcrum == 'root') {continue;}
+
+    //  formate crum for url
+    $urlDir .= urlencode($breadcrum);
+
+    //  add slash
+    $urlDir .= '/';
+
+}
+
+
 //  loop directory
 //  sepatatings files and folders
 foreach ($scandir as $item) {
@@ -47,12 +64,12 @@ foreach ($scandir as $item) {
 
         if (getDirectory('path') == 'root' &&
             $item == 'index.php') {
-          continue;
+            continue;
         }
 
         //  file link
         $actualLink = $directory . '/' . $item;
-        $link = getDirectory('actual') . '/' . $item;
+        $link = $urlDir . urlencode($item); //  getDirectory('actual') . '/' . $item;
 
         //  get file type
         $finfo = finfo_open(FILEINFO_MIME_TYPE);

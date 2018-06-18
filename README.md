@@ -1,5 +1,5 @@
 # Smartlister
-A portable directory lister powered by PHP.
+A portable directory lister powered by PHP. (<i>Work in progress</i>)
 
 ## Features
 Lists the contents of any web directory.
