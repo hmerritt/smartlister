@@ -1,6 +1,7 @@
 <?php
 
 
+//  get directory from url and formate it
 function getDirectory($which) {
     //  default to root
     $directory = 'root';
@@ -23,6 +24,13 @@ function getDirectory($which) {
     }
 
     return $directory;
+}
+
+
+//  convert hex to rgba
+function hexToRgba($hex) {
+  list($r, $g, $b) = sscanf($hex, "#%02x%02x%02x");
+  return "$r, $g, $b";
 }
 
 

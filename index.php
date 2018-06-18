@@ -36,6 +36,7 @@
 
 //  get settings
 require '.smartlister/php/settings.php';
+require '.smartlister/php/useful.php';
 
 
 //  redirect folderless urls
@@ -111,11 +112,22 @@ $directory = $_GET['directory'];
   <style type='text/css'>
 
      .bar-top,
-     .fab > .item,
-     .files-container .item.active,
-     .files-container .directory .item.new,
+     .fab > .item {
+       background-color: rgb(<?php echo hexToRgba($settings['themeColor']) ?>);
+     }
+
+     .info-items .item:not(.storage).active,
      .files-container .directory .item.new.active {
-       background-color: <?php echo $settings['themeColor'] ?>;
+       background-color: rgba(<?php echo hexToRgba($settings['themeColor']) ?>, .7);
+     }
+
+     .files-container .item.active,
+     .files-container .directory .item.new {
+       background-color: rgba(<?php echo hexToRgba($settings['themeColor']) ?>, .5);
+     }
+
+     .info-items .item:not(.storage):hover {
+       background-color: rgba(<?php echo hexToRgba($settings['themeColor']) ?>, .15);
      }
 
   </style>

@@ -22,6 +22,11 @@ $settings = [
     'folderCreation' => true,
 
     //  change theme color (default = '#80D8FF')
+    //  recomended alternatives
+    //  red    => '#FF6176'
+    //  green  => '#4DFF61'
+    //  purple => '#D685FF'
+    //  yellow => '#FFD642'
     'themeColor' => '#80D8FF'
 
 ];
