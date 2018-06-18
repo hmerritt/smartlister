@@ -41,6 +41,21 @@ function waves(obj, opacity) {
     xObj += 1;
 }
 
+//  support for includes in older browsers
+if (!String.prototype.includes) {
+  String.prototype.includes = function(search, start) {
+    if (typeof start !== 'number') {
+      start = 0;
+    }
+
+    if (start + search.length > this.length) {
+      return false;
+    } else {
+      return this.indexOf(search, start) !== -1;
+    }
+  };
+}
+
 function escapeHtml(text) {
     if (text == null || text.length < 1) {
         return '';
