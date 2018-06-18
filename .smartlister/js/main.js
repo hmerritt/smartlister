@@ -41,19 +41,19 @@ function waves(obj, opacity) {
     xObj += 1;
 }
 
-//  support for includes in older browsers
+//  support for includes function in older browsers
 if (!String.prototype.includes) {
-  String.prototype.includes = function(search, start) {
-    if (typeof start !== 'number') {
-      start = 0;
-    }
+    String.prototype.includes = function(search, start) {
+        if (typeof start !== 'number') {
+            start = 0;
+        }
 
-    if (start + search.length > this.length) {
-      return false;
-    } else {
-      return this.indexOf(search, start) !== -1;
-    }
-  };
+        if (start + search.length > this.length) {
+            return false;
+        } else {
+            return this.indexOf(search, start) !== -1;
+        }
+    };
 }
 
 function escapeHtml(text) {
@@ -1033,6 +1033,16 @@ $(document).ready(function () {
         //  replace illegal characters
         name = name.replace(/[^a-z0-9._\-\!\#\[\]\=\+\;\:\~\(\)\^]/gi, '');
 
+        //  check if folder exists
+        var isDuplicate = false;
+        for (var folder in content[md5(directory)]['folders']) {
+            if (content[md5(directory)]['folders'][folder]['name'].toLowerCase() == name.toLowerCase()) {
+              removeNewFolder();
+                toast('Folder already exists', 'cross', 4000);
+                throw new Error('[Folder] Duplicate found');
+            }
+        }
+
         //  make folder breadcrums
         var breadcrums = content[md5(directory)]['breadcrums'].slice();
         breadcrums.push(name);
@@ -1047,7 +1057,6 @@ $(document).ready(function () {
             },
             cache: false
         }).done(function (data) {
-            console.log(data);
             try {
                 data = JSON.parse(data);
                 if (data['status'] == 'ok') {
