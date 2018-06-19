@@ -7,7 +7,27 @@ require 'useful.php';
 
 //  get directory
 $directory = getDirectory('actual');
-$directory = realpath( '../../' . $directory );
+$breadcrums = explode('/', $directory);
+
+
+//  make path fit for url
+$urlDir = '';
+$count = count($breadcrums);
+foreach ($breadcrums as $breadcrum) {
+
+    //  skip root item
+    if ($breadcrum == 'root') {continue;}
+
+    //  formate crum for url
+    $urlDir .= rawurlencode($breadcrum);
+
+    //  add slash
+    $urlDir .= '/';
+
+}
+
+//  make directory
+$directory = realpath( '../..' . urldecode($urlDir) );
 
 
 //  calculate folder size

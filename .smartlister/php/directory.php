@@ -44,7 +44,7 @@ foreach ($breadcrums as $breadcrum) {
     if ($breadcrum == 'root') {continue;}
 
     //  formate crum for url
-    $urlDir .= urlencode($breadcrum);
+    $urlDir .= rawurlencode($breadcrum);
 
     //  add slash
     $urlDir .= '/';
@@ -69,7 +69,7 @@ foreach ($scandir as $item) {
 
         //  file link
         $actualLink = $directory . '/' . $item;
-        $link = $urlDir . urlencode($item); //  getDirectory('actual') . '/' . $item;
+        $link = $urlDir . rawurlencode($item); //  getDirectory('actual') . '/' . $item;
 
         //  get file type
         $finfo = finfo_open(FILEINFO_MIME_TYPE);
