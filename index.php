@@ -97,7 +97,8 @@ $directory = $_GET['directory'];
   <script type='text/javascript'>
 
       //  set current directory
-      window.directory = '<?php echo $directory; ?>';
+      window.directory = '<?php echo addslashes(rawurldecode($directory)); ?>';
+      console.log(directory);
 
       //  set users settings
       window.settings = {

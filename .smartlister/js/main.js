@@ -472,9 +472,22 @@ $(document).ready(function () {
         $('.files-container #' + dirHash).removeClass('hidden');
         changeBreadcrums(dirHash);
 
+
+        //  encode directory for url
+        //  split directory by slashes
+        var breadcrums = directory.split('/'),
+            urlDirectory = '';
+
+        //  loop breadcrums encoding each one
+        for (var crum in breadcrums) {
+            urlDirectory += encodeURIComponent(breadcrums[crum]) + '/';
+        }
+        urlDirectory = urlDirectory.substring(0, urlDirectory.length-1);
+
         //  change url (data | title | url)
-        window.history.pushState(null, 'Smartlister', 'index.php?directory=' + directory);
+        window.history.pushState(null, 'Smartlister', 'index.php?directory=' + urlDirectory);
     }
+
 
     //  detect file extention
     function getFileIcon(type, link, size) {
@@ -726,10 +739,10 @@ $(document).ready(function () {
     //  update storage quota
     function getStorageQuota() {
         $.ajax({
-            url: settings['listerFolderName'] + '/php/storage.php?directory=' + directory,
+            url: settings['listerFolderName'] + '/php/storage.php',
             type: 'POST',
             data: {
-                nothing: ''
+                directory: directory
             },
             cache: false
         }).done(function (data) {
