@@ -104,7 +104,9 @@ $directory = $_GET['directory'];
       window.settings = {
           'listerFolderName': '<?php echo $settings['listerFolderName'] ?>',
           'fileUpload': Boolean(<?php echo $settings['fileUpload'] ?>),
-          'folderCreation': Boolean(<?php echo $settings['folderCreation'] ?>)
+          'folderCreation': Boolean(<?php echo $settings['folderCreation'] ?>),
+          'renameItems': Boolean(<?php echo $settings['renameItems'] ?>),
+          'themeColor': '<?php echo $settings['themeColor'] ?>'
       };
 
   </script>

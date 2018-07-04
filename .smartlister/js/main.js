@@ -254,16 +254,25 @@ $(document).ready(function () {
         }
 
         //  f key - new folder
-        if (e.which == 70 || e.keyCode == 70) {
+        //if (e.which == 70 || e.keyCode == 70) {
+        //    e.preventDefault();
+        //    var newFolderObj = $('.files-container .directory .folders .item.new');
+        //    if (newFolderObj.length < 1 || newFolderObj.hasClass('slideUp')) {
+        //        $('.info-items .item.newFolder').trigger('click');
+        //    }
+        //}
+
+        //  f2 key - rename item
+        if (e.which == 113 || e.keyCode == 113) {
             e.preventDefault();
-            if ($('.files-container .directory .folders .item.new').length < 1) {
-                $('.info-items .item.newFolder').trigger('click');
-            }
+            renameToggle(true);
         }
 
         //  arrow up - select next item
         if (e.which == 38 || e.keyCode == 38) {
             e.preventDefault();
+
+            renameToggle(false);
 
             //  select items of all combinations
             var items = $('.files-container .directory[id=' + md5(directory) + '] .item:not(.uploading, .new, .deleting)'),
@@ -314,6 +323,8 @@ $(document).ready(function () {
         //  arrow down - select next item
         if (e.which == 40 || e.keyCode == 40) {
             e.preventDefault();
+
+            renameToggle(false);
 
             //  select items of all combinations
             var items = $('.files-container .directory[id=' + md5(directory) + '] .item:not(.uploading, .new, .deleting)'),
@@ -646,7 +657,7 @@ $(document).ready(function () {
 
     //  open folder
     var action = mobile ? 'click' : 'dblclick';
-    $(document).on(action, '.files-container .directory .folders .item:not(.new, .deleting)', function (e) {
+    $(document).on(action, '.files-container .directory .folders .item:not(.new, .deleting, .renaming)', function (e) {
         var newDir = 'root' + Base64.decode($(this).attr('link'));
         if (directory !== newDir) {
             getFolder(newDir);
@@ -654,7 +665,7 @@ $(document).ready(function () {
     });
 
     //  download file
-    $(document).on(action, '.files-container .directory .files .item:not(.uploading), .info-items .item[link]', function (e) {
+    $(document).on(action, '.files-container .directory .files .item:not(.uploading, .renaming), .info-items .item[link]', function (e) {
         try {
             var dlink = window.location.pathname.replace(/[\\\/][^\\\/]*$/, '') + Base64.decode($(this).attr('link'));
             window.open(dlink);
@@ -714,6 +725,9 @@ $(document).ready(function () {
             if ($('.fab').addClass('open')) {
                 toggleFab();
             }
+        }
+        if (!$(e.target).closest('.directory .item.renaming').length > 0) {
+            renameToggle(false);
         }
     });
 
@@ -818,9 +832,25 @@ $(document).ready(function () {
         //  add file to ui
         var image = getFileIcon(file.type, '', '40');
 
-        var link = directory.substring(4) + '/' + fileName,
-            type = Base64.encode(file.type),
+        var type = Base64.encode(file.type),
             modified = moment().format("MMM DD, Y");
+
+
+        //  encode directory for url
+        //  split directory by slashes
+        var fileLink = '';
+        if (directory == 'root') {
+            fileLink = '/';
+        } else {
+            var breadcrums = directory.substring(4).split('/');
+
+            //  loop breadcrums encoding each one
+            for (var crum in breadcrums) {
+                fileLink += encodeURIComponent(breadcrums[crum]) + '/';
+            }
+        }
+        var link = fileLink + encodeURIComponent(fileName);
+
 
         var fileInfo = {
             'name': fileName,
@@ -1112,6 +1142,182 @@ $(document).ready(function () {
         });
     }
 
+
+
+    //  toggle item input
+    var renameOldName = '';
+    function renameToggle(toggle) {
+
+        //  check settings file
+        if (!settings['renameItems']) {
+            return false;
+        }
+
+        //  get active item
+        var item = $('.directory .item.active'),
+            type = 'file';
+
+        if ($(item).parent().hasClass('files')) {
+            type = 'folder';
+        }
+
+        //  toggle rename input
+        //  does not apply to new or uploading items
+        if (toggle == true && item.length == 1 && !$(item).hasClass('renaming') && !$(item).hasClass('new') && !$(item).hasClass('uploading')) {
+
+            //  save old name
+            //  set input html
+            renameOldName = $(item).find('.name').html();
+            var input = '<div class="input"><input placeholder="Rename item" type="text"></div>';
+
+            //  add input to item
+            $(item).addClass('renaming').find('.name').after(input).remove();
+            $(item).find('input').val(renameOldName).focus().select();
+
+        } else {
+
+            //  reset item
+            $('.directory .item.renaming')
+            .removeClass('renaming')
+            .find('.input')
+            .after('<h2 class="name">'+ renameOldName +'</h2>')
+            .remove();
+
+        }
+
+    }
+
+
+    //  trigger rename
+    $(document).on('keyup', '.directory .item.renaming input', function (e) {
+        e.preventDefault();
+        //  if enter has been pressed
+        if (e.which == 13 || e.keyCode == 13) {
+
+            //  set type + new and old name
+            var newName = $(this).val(),
+                oldName = renameOldName,
+                type = 'file';
+
+            //  check if type is folder
+            if ($(this).parent().parent().parent().hasClass('folders')) {
+                type = 'folder';
+            }
+
+            renameItem(type, oldName, newName);
+
+        }
+    });
+
+
+    //  rename file or folder
+    function renameItem(type, oldName, newName) {
+
+        //  replace illegal characters
+        newName = newName.replace(/[^a-z0-9._\-\!\#\[\]\=\+\;\:\~\(\)\^\@\£\$\%\^\&\* ]/gi, '');
+        var dir = directory;
+
+        //  check if folder exists
+        var isDuplicate = false;
+        if (type == 'folder') {
+            for (var folder in content[md5(directory)]['folders']) {
+                if (content[md5(directory)]['folders'][folder]['name'].toLowerCase() == newName.toLowerCase()) {
+                    toast('Folder already exists', 'cross', 4000);
+                    throw new Error('[Folder] Duplicate found');
+                }
+            }
+        } else {
+            for (var file in content[md5(directory)]['files']) {
+                if (content[md5(directory)]['files'][file]['name'].toLowerCase() == newName.toLowerCase()) {
+                    toast('File already exists', 'cross', 4000);
+                    throw new Error('[File] Duplicate found');
+                }
+            }
+        }
+
+
+        //  rename item
+        $.ajax({
+            url: settings['listerFolderName'] + '/php/rename.php',
+            type: 'POST',
+            data: {
+                type: type,
+                directory: dir,
+                oldName: oldName,
+                newName: newName
+            },
+            cache: false
+        }).done(function (data) {
+            try {
+                data = JSON.parse(data);
+                if (data['status'] == 'ok') {
+
+
+                    //  recreate directory for new folder link
+                    var linkFolder = dir.substring(4) + '/' + newName;
+                    if (dir == 'root') {
+                        linkFolder = '/' + newName;
+                    }
+
+                    //  encode directory for url
+                    //  split directory by slashes
+                    var breadcrums = dir.substring(5).split('/'),
+                        linkFile = '/';
+
+                    //  loop breadcrums encoding each one
+                    for (var crum in breadcrums) {
+                        linkFile += encodeURIComponent(breadcrums[crum]) + '/';
+                    }
+                    linkFile += encodeURIComponent(newName);
+
+
+                    //  update to content
+                    if (type == 'folder') {
+                        for (var item in content[md5(dir)]['folders']) {
+                            if (content[md5(dir)]['folders'][item]['name'] == oldName) {
+                                content[md5(dir)]['folders'][item]['name'] = newName;
+                                content[md5(dir)]['folders'][item]['link'] = linkFolder;
+                            }
+                        }
+                    } else {
+                        for (var item in content[md5(dir)]['files']) {
+                            if (content[md5(dir)]['files'][item]['name'] == oldName) {
+                                content[md5(dir)]['files'][item]['name'] = newName;
+                                content[md5(dir)]['files'][item]['link'] = linkFile;
+                            }
+                        }
+                    }
+
+                    //  re-sort items
+                    addDirectory(directory);
+
+                    //  report a success to the user
+                    if (type == 'folder') {
+                        toast('Folder renamed', 'tick', 2800);
+                        console.log('[Folder] Folder renamed: ' + name);
+                    } else {
+                        toast('File renamed', 'tick', 2800);
+                        console.log('[File] File renamed: ' + name);
+                    }
+
+                } else {
+                    throw 'Server error';
+                }
+            } catch (err) {
+                toast('Item not renamed', 'cross', 4000);
+                console.error('[Item] Unable to rename item (' + err + ')');
+            }
+        }).fail(function () {
+            toast('Item not renamed', 'cross', 4000);
+            console.error('[Item] Unable to request for a rename (most likely due to loss of internet)');
+        });
+
+    }
+
+
+
+
+
     //  open file
     function openFile() {
         var file = $('.files-container .directory[id=' + directory + '] .item.active');
@@ -1142,10 +1348,12 @@ $(document).ready(function () {
         }
     }
 
+
     //  disable fab from settings
     if (!settings['fileUpload'] && !settings['folderCreation']) {
         $('.fab').css({ 'display': 'none' });
     }
+
 
     //  mobile fab
     $(document).on('click', '.fab .item', function (e) {
@@ -1167,6 +1375,7 @@ $(document).ready(function () {
         }
     });
 
+
     //  toggle fab
     function toggleFab() {
         if ($('.fab').hasClass('open')) {
@@ -1181,4 +1390,7 @@ $(document).ready(function () {
             multipleFadeIn($('.fab .item:not(.main)'), 'fadeInUp', 88, 8);
         }
     }
+
+
+
 });

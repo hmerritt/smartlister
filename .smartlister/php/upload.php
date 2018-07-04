@@ -8,11 +8,11 @@ require 'settings.php';
 
 //  redirect users who are not logged in
 if (!isset($_FILES['file']) || !isset($settings)) {
-    header('HTTP/1.0 404 Not Found');
-  	die;
+    header('HTTP/1.0 403 Restricted');
+  	die('No File Found');
 } elseif (!$settings['fileUpload']) {
-    header('HTTP/1.0 404 Not Found');
-    die;
+    header('HTTP/1.0 403 Restricted');
+    die('Settings file not found');
 }
 
 

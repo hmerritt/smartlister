@@ -6,6 +6,7 @@ Lists the contents of any web directory.
  - Resizes for mobile
  - File upload & folder creation
  - Drag and drop support
+ - Rename files and folders
  - Displays directory size
  - Uses image as file icon
  - Caches all items loaded
@@ -14,6 +15,7 @@ Lists the contents of any web directory.
 #### Settings file options
  - Toggle ability to upload files
  - Toggle ability to create folders
+ - Toggel ability to rename items
  - Change theme colour
 
 ## How to use

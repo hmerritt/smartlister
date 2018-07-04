@@ -21,6 +21,9 @@ $settings = [
     //  toggle ability to create folders
     'folderCreation' => true,
 
+    //  toggle ability to rename files and folders
+    'renameItems' => true,
+
     //  change theme color (default = '#80D8FF')
     //  recomended alternatives
     //  red    => '#FF6176'
