@@ -1475,6 +1475,7 @@ $(document).ready(function () {
         } else if (newDirectoryBreadcrums !== undefined && newDirectoryBreadcrums !== null) {
             //  decode and parse breadcrum directory
             var newBreadcrums = JSON.parse(Base64.decode(newDirectoryBreadcrums));
+            newDirectoryName = newBreadcrums[newBreadcrums.length-1];
         } else {
             return false;
         }
@@ -1495,13 +1496,17 @@ $(document).ready(function () {
             },
             cache: false
         }).done(function (data) {
-            console.log(data);
             try {
                 data = JSON.parse(data);
                 if (data['status'] == 'ok') {
 
-                    var newDirectory = dir + '/' + newDirectoryName,
-                        ucType = type.charAt(0).toUpperCase() + type.slice(1),
+                    var newDirectory = '';
+                    for (var folder in newBreadcrums) {
+                        newDirectory += newBreadcrums[folder] + '/';
+                    }
+                    newDirectory = newDirectory.slice(0, -1);
+
+                    var ucType = type.charAt(0).toUpperCase() + type.slice(1),
                         plType = type + 's';
 
                     //  update to content

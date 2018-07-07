@@ -36,7 +36,6 @@ $newDirectory = substr($newDirectory, 5);
 //  get full new directory
 $newFilePath = realpath('../../' . $newDirectory) . DIRECTORY_SEPARATOR;
 
-
 //  catch any errors
 try {
     //  check if file exists
