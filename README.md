@@ -5,7 +5,8 @@ A portable directory lister powered by PHP.
 Lists the contents of any web directory.
  - Resizes for mobile
  - File upload & folder creation
- - Drag and drop support
+ - Drag and drop file upload support
+ - Drag and drop to move files and folders
  - Rename files and folders
  - Displays directory size
  - Uses image as file icon
@@ -16,6 +17,7 @@ Lists the contents of any web directory.
  - Toggle ability to upload files
  - Toggle ability to create folders
  - Toggel ability to rename items
+ - Toggle ability to move items
  - Change theme colour
 
 ## How to use

@@ -98,7 +98,6 @@ $directory = $_GET['directory'];
 
       //  set current directory
       window.directory = '<?php echo addslashes(rawurldecode($directory)); ?>';
-      console.log(directory);
 
       //  set users settings
       window.settings = {
@@ -216,6 +215,7 @@ $directory = $_GET['directory'];
                 </div>
             </div>
 
+
             <!--  files container  -->
             <div class='files-container'>
                 <div class='loader flex'>
@@ -231,6 +231,13 @@ $directory = $_GET['directory'];
                 </div>
                 -->
             </div>
+
+            <!--  file drag to move box  -->
+            <div class='drag-to-move flex no-user-select'>
+                <svg viewBox="0 0 24 24">  </svg>
+                <h2 class="name">  </h2>
+            </div>
+
 
             <!--  upload input  -->
             <input id='upload' name='upload[]' type='file' multiple=''>

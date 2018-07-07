@@ -24,6 +24,9 @@ $settings = [
     //  toggle ability to rename files and folders
     'renameItems' => true,
 
+    //  toggle ability to move file and folders
+    'moveItems' => true,
+
     //  change theme color (default = '#80D8FF')
     //  recomended alternatives
     //  red    => '#FF6176'

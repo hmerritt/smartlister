@@ -23,7 +23,7 @@ $directory = getDirectory('actual');
 $type = $_POST['type'];
 $oldName = $_POST['oldName'];
 $newName = $_POST['newName'];
-$filePath = realpath('../../' . $directory . '/') . '/';
+$filePath = realpath('../../' . $directory . '/') . DIRECTORY_SEPARATOR;
 
 
 //  catch any errors

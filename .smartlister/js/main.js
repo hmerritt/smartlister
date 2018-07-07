@@ -1349,6 +1349,199 @@ $(document).ready(function () {
     }
 
 
+
+
+    //  detect file drag
+    $(function() {
+        var pressed,
+            objPressed;
+
+        //  detect mouse down + move + up / item hover
+        $(document)
+        .on('mousedown', '.directory .item:not(.new, .uploading, .renaming)', function(e) {
+            pressed = true;
+            objPressed = $(this);
+        })
+        .on('mousemove', 'body', function(e) {
+            if (!pressed) return;
+            var posX = e.clientX;
+            var posY = e.clientY;
+            itemDragStart(objPressed, posX, posY);
+        })
+        .on('mouseup', function() {
+            moveItem(objPressed);
+            itemDragEnd();
+            pressed = false;
+            objPressed = 0;
+        })
+        .on({
+            mouseenter: function () {
+                if (objPressed == $(this) || !pressed) return false;
+
+                //  add visual indication of a folder being hovered
+                $(this).addClass('drag-active');
+            },
+            mouseleave: function () {
+                //  reset visual indication of a folder being hovered
+                $(this).removeClass('drag-active');
+            }
+        }, '.directory .folders .item:not(.new, .uploading, .renaming), .breadcrums .item');
+
+    });
+
+
+    //  initialise file drag
+    function itemDragStart(item, posX, posY) {
+
+        //  show file move box
+        $('.drag-to-move').addClass('active').css({
+          'left': posX + 'px',
+          'top': posY + 'px'
+        });
+
+
+        //  return if an item is already being dragged
+        if ($('.directory .item.dragging').length > 0) {
+            return false;
+        }
+
+        //  lower opacity of active item
+        $(item).addClass('dragging');
+
+
+        //  remove old info
+        $('.drag-to-move').empty();
+
+        //  set item name + image
+        var name = $(item).find('.name').html();
+        var icon = {
+          'type': 'svg',
+          'html': $(item).find('svg').html()
+        }
+        if (icon['html'] == undefined || icon['html'] == null) {
+            icon['type'] = 'img';
+            icon['html'] = $(item).find('.img').attr('style');
+        }
+
+        //  add file info to move box
+        //  add name
+        $('.drag-to-move').html('<h2 class="name">'+ name +'</h2>');
+
+        //  add icon
+        if (icon['type'] == 'svg') {
+            $('.drag-to-move .name').before('<svg viewBox="0 0 24 24">'+ icon['html'] +'</svg>');
+        } else {
+            $('.drag-to-move .name').before("<div class=\"img\" style='"+ icon['html'] +"'></div>");
+        }
+
+    }
+
+
+    //  reset drag
+    function itemDragEnd() {
+
+        //  reset active dragging item
+        $('.directory .item, .bredcrums .item').removeClass('dragging drag-active');
+
+        //  hide file move box
+        $('.drag-to-move').removeClass('active').css({'left': '100%', 'top': '0'});
+
+    }
+
+
+    //  move items
+    function moveItem(item) {
+
+        //  get item vars
+        var name = $(item).find('.name').html(),
+            type = 'file',
+            dir = directory,
+            newDirectoryName = $('.directory .folders .item.drag-active').find('.name').html(),
+            newDirectoryBreadcrums = $('.breadcrums .item.drag-active').attr('dir');
+
+        //  check for folder instead of file
+        if ($(item).parent().hasClass('folders')) {
+            type = 'folder';
+        }
+
+        //  make current directorys breadcrums (for comparison)
+        var currentBreadcrums = dir.split('/');
+
+        //  check for a folder drag (not breadcrum)
+        if (newDirectoryName !== undefined && newDirectoryName !== null) {
+            //  make new breadcrums
+            var newPath = dir + '/' + newDirectoryName,
+                newBreadcrums = newPath.split('/');
+        } else if (newDirectoryBreadcrums !== undefined && newDirectoryBreadcrums !== null) {
+            //  decode and parse breadcrum directory
+            var newBreadcrums = JSON.parse(Base64.decode(newDirectoryBreadcrums));
+        } else {
+            return false;
+        }
+
+        //  prevent false file moves
+        if (JSON.stringify(currentBreadcrums) == JSON.stringify(newBreadcrums) ||
+            newBreadcrums[newBreadcrums.length-1] == name) return false;
+
+
+        $.ajax({
+            url: settings['listerFolderName'] + '/php/move.php',
+            type: 'POST',
+            data: {
+                type: type,
+                name: name,
+                directory: dir,
+                newBreadcrums: JSON.stringify(newBreadcrums)
+            },
+            cache: false
+        }).done(function (data) {
+            console.log(data);
+            try {
+                data = JSON.parse(data);
+                if (data['status'] == 'ok') {
+
+                    var newDirectory = dir + '/' + newDirectoryName,
+                        ucType = type.charAt(0).toUpperCase() + type.slice(1),
+                        plType = type + 's';
+
+                    //  update to content
+                    for (var item in content[md5(dir)][plType]) {
+                        if (content[md5(dir)][plType][item]['name'] == name) {
+                            var itemObj = content[md5(dir)][plType][item];
+                            content[md5(dir)][plType].splice(item, 1);
+                            if (typeof content[md5(newDirectory)] !== 'undefined' &&
+                                typeof content[md5(newDirectory)] !== 'null') {
+                                content[md5(newDirectory)][plType].push(itemObj);
+                            }
+                        }
+                    }
+
+                    //  re-sort items
+                    addDirectory(directory);
+
+                    //  report a success to the user
+                    toast(ucType + ' moved', 'tick', 2800);
+                    console.log('['+ ucType +'] '+ ucType +' moved: ' + name);
+
+                } else {
+                    throw 'Server error';
+                }
+            } catch (err) {
+                toast('Item not moved', 'cross', 4000);
+                console.error('[Item] Unable to move item (' + err + ')');
+            }
+        }).fail(function () {
+            toast('Item not moved', 'cross', 4000);
+            console.error('[Item] Unable to request for an item move (most likely due to loss of internet)');
+        });
+
+
+    }
+
+
+
+
+
     //  disable fab from settings
     if (!settings['fileUpload'] && !settings['folderCreation']) {
         $('.fab').css({ 'display': 'none' });
