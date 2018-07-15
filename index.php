@@ -105,6 +105,7 @@ $directory = $_GET['directory'];
           'fileUpload': Boolean(<?php echo $settings['fileUpload'] ?>),
           'folderCreation': Boolean(<?php echo $settings['folderCreation'] ?>),
           'renameItems': Boolean(<?php echo $settings['renameItems'] ?>),
+          'moveItems': Boolean(<?php echo $settings['moveItems'] ?>),
           'themeColor': '<?php echo $settings['themeColor'] ?>'
       };
 

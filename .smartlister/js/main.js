@@ -1351,43 +1351,67 @@ $(document).ready(function () {
 
 
 
-    //  detect file drag
-    $(function() {
-        var pressed,
-            objPressed;
+    //  if moving items is enabled
+    if (settings['moveItems']) {
 
-        //  detect mouse down + move + up / item hover
-        $(document)
-        .on('mousedown', '.directory .item:not(.new, .uploading, .renaming)', function(e) {
-            pressed = true;
-            objPressed = $(this);
-        })
-        .on('mousemove', 'body', function(e) {
-            if (!pressed) return;
-            var posX = e.clientX;
-            var posY = e.clientY;
-            itemDragStart(objPressed, posX, posY);
-        })
-        .on('mouseup', function() {
-            moveItem(objPressed);
-            itemDragEnd();
-            pressed = false;
-            objPressed = 0;
-        })
-        .on({
-            mouseenter: function () {
-                if (objPressed == $(this) || !pressed) return false;
+        //  detect file drag
+        $(function() {
+            var pressed,
+                posX,
+                posY,
+                objPressed;
 
-                //  add visual indication of a folder being hovered
-                $(this).addClass('drag-active');
-            },
-            mouseleave: function () {
-                //  reset visual indication of a folder being hovered
-                $(this).removeClass('drag-active');
-            }
-        }, '.directory .folders .item:not(.new, .uploading, .renaming), .breadcrums .item');
+            //  detect mouse down + move + up / item hover
+            $(document)
+            .on('mousedown', '.directory .item:not(.new, .uploading, .renaming)', function(e) {
+                pressed = true;
+                posX = e.clientX;
+                posY = e.clientY;
+                objPressed = $(this);
+            })
+            .on('mousemove', 'body', function(e) {
+                if (!pressed) return;
+                var newPosX = e.clientX;
+                var newPosY = e.clientY;
+                if (!itemDragDelay(posX, posY, newPosX, newPosY)) return;
+                itemDragStart(objPressed, newPosX, newPosY);
+            })
+            .on('mouseup', function() {
+                moveItem(objPressed);
+                itemDragEnd();
+                pressed = false;
+                objPressed = 0;
+            })
+            .on({
+                mouseenter: function () {
+                    if (objPressed == $(this) || !pressed) return false;
 
-    });
+                    //  add visual indication of a folder being hovered
+                    $(this).addClass('drag-active');
+                },
+                mouseleave: function () {
+                    //  reset visual indication of a folder being hovered
+                    $(this).removeClass('drag-active');
+                }
+            }, '.directory .folders .item:not(.new, .uploading, .renaming), .breadcrums .item');
+
+        });
+
+    }
+
+
+    //  delay item drag (prevent false drag)
+    function itemDragDelay(posX, posY, newPosX, newPosY) {
+
+        //  if x or y has moved more than 10px
+        if (Math.abs(posX - newPosX) >= 12 || Math.abs(posY - newPosY) >= 12) {
+            return true;
+        }
+
+        //  if drag is not applicable
+        return false;
+
+    }
 
 
     //  initialise file drag
