@@ -1500,24 +1500,34 @@ $(document).ready(function () {
                 data = JSON.parse(data);
                 if (data['status'] == 'ok') {
 
+                    //  convert breadcrum array to string
                     var newDirectory = '';
                     for (var folder in newBreadcrums) {
                         newDirectory += newBreadcrums[folder] + '/';
                     }
                     newDirectory = newDirectory.slice(0, -1);
 
+                    //  set uppercase type and plural type
                     var ucType = type.charAt(0).toUpperCase() + type.slice(1),
                         plType = type + 's';
 
                     //  update to content
                     for (var item in content[md5(dir)][plType]) {
                         if (content[md5(dir)][plType][item]['name'] == name) {
+
+                            //  save old item then delete it from obj
                             var itemObj = content[md5(dir)][plType][item];
                             content[md5(dir)][plType].splice(item, 1);
+
+                            //  update item link
+                            itemObj['link'] = newDirectory.substring(4) + '/' + itemObj['name'];
+
+                            //  add item to new directory (if it exists)
                             if (typeof content[md5(newDirectory)] !== 'undefined' &&
                                 typeof content[md5(newDirectory)] !== 'null') {
                                 content[md5(newDirectory)][plType].push(itemObj);
                             }
+
                         }
                     }
 

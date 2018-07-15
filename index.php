@@ -63,7 +63,7 @@ $directory = $_GET['directory'];
 
 
   <!--  set meta tags  -->
-  <meta name='theme-color' content='#3895FF'>
+  <meta name='theme-color' content='<?php echo $settings['themeColor'] ?>'>
   <meta name='author' content='https://plus.google.com/116753589877462757583' />
   <meta name='viewport' content='width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no'>
 
