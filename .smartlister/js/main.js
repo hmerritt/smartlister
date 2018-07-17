@@ -1179,7 +1179,28 @@ $(document).ready(function () {
 
             //  add input to item
             $(item).addClass('renaming').find('.name').after(input).remove();
-            $(item).find('input').val(renameOldName).focus().select();
+            $(item).find('input').val(renameOldName).focus();
+
+            //  select file name (but not extension)
+            var inputObj = $(item).find('input');
+            var endPos = renameOldName.lastIndexOf('.');
+            if (type !== 'file') {
+                if (typeof inputObj[0].selectionStart != "undefined") {
+                    inputObj[0].selectionStart = 0;
+                    inputObj[0].selectionEnd = endPos;
+                } else if (document.selection && document.selection.createRange) {
+                    // IE branch
+                    inputObj[0].select();
+                    var range = document.selection.createRange();
+                    range.collapse(true);
+                    range.moveEnd("character", endPos);
+                    range.moveStart("character", 0);
+                    range.select();
+                }
+            } else {
+                $(item).find('input').select();
+            }
+
 
         } else {
 
