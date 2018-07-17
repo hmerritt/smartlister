@@ -483,6 +483,9 @@ $(document).ready(function () {
         $('.files-container #' + dirHash).removeClass('hidden');
         changeBreadcrums(dirHash);
 
+        //  reset rename btn
+        $('.info-items .item.rename').addClass('faded');
+
 
         //  encode directory for url
         //  split directory by slashes
@@ -572,7 +575,7 @@ $(document).ready(function () {
     //  reset object specific click events
     $(document).mouseup(function (e) {
         //  do not run if clicked specific objects
-        if (!$(e.target).closest('.files-container .item:not(.uploading, .new), .contextmenu').length > 0) {
+        if (!$(e.target).closest('.files-container .item:not(.uploading, .new), .contextmenu, .info-items .item.rename').length > 0) {
             $('.files-container .item').removeClass('active');
         }
     });
@@ -583,6 +586,7 @@ $(document).ready(function () {
             return false;
         }
         $('.files-container .item').removeClass('active');
+        $('.info-items .item.rename').removeClass('faded');
         $(this).addClass('active');
     });
 
@@ -685,6 +689,7 @@ $(document).ready(function () {
     //  select item
     function selectItem(obj) {
         $(obj).addClass('active');
+        $('.info-items .item.rename').removeClass('faded');
     }
 
     //  select next item in container
@@ -722,8 +727,9 @@ $(document).ready(function () {
         if (!$(e.target).closest('.info-items .item:not(.storage)').length > 0) {
             $('.info-items .item').removeClass('active');
         }
-        if (!$(e.target).closest('.files-container .item:not(.uploading, .new), .contextmenu').length > 0) {
+        if (!$(e.target).closest('.files-container .item:not(.uploading, .new), .contextmenu, .info-items .item.rename').length > 0) {
             $('.files-container .item').removeClass('active');
+            $('.info-items .item.rename').addClass('faded');
         }
         if ($(e.target).closest('.info-items .newFolder').length == 0 && $(e.target).closest('.folders .item.new').length == 0) {
             removeNewFolder();
@@ -1150,6 +1156,11 @@ $(document).ready(function () {
     }
 
 
+
+    //  info-item rename trigger
+    $(document).on('click', '.info-items .item.rename', function() {
+        renameToggle(true);
+    });
 
     //  toggle item input
     var renameOldName = '';

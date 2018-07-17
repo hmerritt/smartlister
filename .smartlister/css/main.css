@@ -445,6 +445,21 @@ body {
 }
 
 
+.info-items .item.rename {
+  opacity: 1;
+  cursor: pointer;
+}
+.info-items .item.rename.faded {
+  cursor: default;
+  opacity: .4;
+}
+.info-items .item.rename.faded:hover,
+.info-items .item.rename.faded.active {
+  color: inherit;
+  background-color: inherit;
+}
+
+
 .info-items .item[state=false] {
   display: none;
 }
