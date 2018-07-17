@@ -495,8 +495,15 @@ $(document).ready(function () {
         }
         urlDirectory = urlDirectory.substring(0, urlDirectory.length-1);
 
+        //  change page title to current directory
+        //  capitalize root directory
+        var newTitle = breadcrums[breadcrums.length-1] + ' | Smartlister';
+        if (newTitle == 'root | Smartlister') newTitle = 'Root | Smartlister';
+        $('head title').html(newTitle);
+
         //  change url (data | title | url)
-        window.history.pushState(null, 'Smartlister', 'index.php?directory=' + urlDirectory);
+        window.history.pushState(newTitle, newTitle, 'index.php?directory=' + urlDirectory);
+
     }
 
 

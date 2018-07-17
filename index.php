@@ -133,6 +133,11 @@ $directory = $_GET['directory'];
        background-color: rgba(<?php echo hexToRgba($settings['themeColor']) ?>, .15);
      }
 
+     .overlay-upload .icon-cloud,
+     .overlay-upload .box {
+       background-color: rgba(<?php echo hexToRgba($settings['themeColor']) ?>, 1);
+     }
+
   </style>
 
 </head>

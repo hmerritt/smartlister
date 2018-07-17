@@ -10,6 +10,7 @@ Lists the contents of any web directory.
  - Rename files and folders
  - Displays directory size
  - Uses image as file icon
+ - 12 material file icons
  - Caches all items loaded
  - Sort by name (saves as cookie)
  
