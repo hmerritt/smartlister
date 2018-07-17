@@ -794,7 +794,7 @@ $(document).ready(function () {
     }).on('dragleave dragend drop', function () {
         $('.overlay-upload').removeClass('active dragdrop');
     }).on('drop', function (e) {
-        droppedFiles = e.originalEvent.dataTransfer.files;
+        var droppedFiles = e.originalEvent.dataTransfer.files;
         document.getElementById('upload').files = droppedFiles;
     });
 

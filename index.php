@@ -36,7 +36,7 @@
 
 //  get settings
 require '.smartlister/php/settings.php';
-require '.smartlister/php/useful.php';
+require $settings['listerFolderName'] . '/php/useful.php';
 
 
 //  redirect folderless urls

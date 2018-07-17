@@ -21,7 +21,7 @@ $settings = [
     //  toggle ability to create folders
     'folderCreation' => true,
 
-    //  toggle ability to rename files and folders
+    //  toggle ability to rename files and folders (activate via f2 key)
     'renameItems' => true,
 
     //  toggle ability to move file and folders

@@ -1,15 +1,15 @@
 # Smartlister
-A portable directory lister powered by PHP.
+A light-weight and customisable directory lister powered by PHP.
 
 ## Features
-Lists the contents of any web directory.
+Lists the contents of any web directory (does not list hidden files and folders).
  - Resizes for mobile
  - File upload & folder creation
  - Drag and drop file upload support
  - Drag and drop to move files and folders
  - Rename files and folders
  - Displays directory size
- - Uses image as file icon
+ - Generates thumbnails for image files
  - 12 material file icons
  - Caches all items loaded
  - Sort by name (saves as cookie)
