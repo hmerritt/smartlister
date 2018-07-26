@@ -253,6 +253,14 @@ $(document).ready(function () {
             }
         }
 
+
+        //  delete - delete active item
+        if (e.which == 46 || e.keyCode == 46) {
+            if ($('.directory .item.active').length == 1) {
+                deleteItem();
+            }
+        }
+
         //  f key - new folder
         //if (e.which == 70 || e.keyCode == 70) {
         //    e.preventDefault();

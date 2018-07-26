@@ -7,7 +7,7 @@ require 'settings.php';
 
 
 //  deny malformed requests
-if (!isset($_POST['directory']) || !isset($_POST['name'])) {
+if (!isset($_POST['directory']) || !isset($_POST['name']) || !$settings['deleteItems']) {
     header('HTTP/1.0 403 Forbidden');
     die;
 }
