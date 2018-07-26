@@ -1,5 +1,5 @@
 # Smartlister
-A light-weight and customisable directory lister powered by PHP.
+A light-weight and customizable directory lister powered by PHP.
 
 ## Features
 Lists the contents of any web directory (does not list hidden files and folders).
@@ -7,9 +7,9 @@ Lists the contents of any web directory (does not list hidden files and folders)
  - File upload & folder creation
  - Drag and drop file upload support
  - Drag and drop to move files and folders
- - Rename files and folders
- - Displays directory size
+ - Rename and Delete files and folders
  - Generates thumbnails for image files
+ - Displays directory size
  - 12 material file icons
  - Caches all items loaded
  - Sort by name (saves as cookie)
@@ -18,6 +18,7 @@ Lists the contents of any web directory (does not list hidden files and folders)
  - Toggle ability to upload files
  - Toggle ability to create folders
  - Toggel ability to rename items
+ - Toggle ability to delete items
  - Toggle ability to move items
  - Change theme colour
 

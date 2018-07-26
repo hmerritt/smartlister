@@ -1195,6 +1195,9 @@ $(document).ready(function () {
             plType = 'folders';
         }
 
+        //  remove item from ui
+        $('.directory .item.active').remove();
+
 
         //  delete item
         $.ajax({
@@ -1237,10 +1240,12 @@ $(document).ready(function () {
                     throw 'Server error';
                 }
             } catch (err) {
+                addDirectory(directory);
                 toast('Item not deleted', 'cross', 4000);
                 console.error('[Item] Unable to delete item (' + err + ')');
             }
         }).fail(function () {
+            addDirectory(directory);
             toast('Item not deleted', 'cross', 4000);
             console.error('[Item] Unable to request for an item deletion (most likely due to loss of internet)');
         });
