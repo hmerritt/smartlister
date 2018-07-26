@@ -443,18 +443,22 @@ body {
   color: #444;
   background-color: rgba(128,216,255, .7);
 }
+.info-items .item.delete.active {
+  background-color: #FFF !important;
+}
 
 
-.info-items .item.rename {
+.info-items .item.rename,
+.info-items .item.delete {
   opacity: 1;
   cursor: pointer;
 }
-.info-items .item.rename.faded {
+.info-items .item.faded {
   cursor: default;
   opacity: .4;
 }
-.info-items .item.rename.faded:hover,
-.info-items .item.rename.faded.active {
+.info-items .item.faded:hover,
+.info-items .item.faded.active {
   color: inherit;
   background-color: inherit;
 }

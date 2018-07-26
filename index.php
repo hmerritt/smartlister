@@ -104,6 +104,7 @@ $directory = $_GET['directory'];
           'listerFolderName': '<?php echo $settings['listerFolderName'] ?>',
           'fileUpload': Boolean(<?php echo $settings['fileUpload'] ?>),
           'folderCreation': Boolean(<?php echo $settings['folderCreation'] ?>),
+          'deleteItems': Boolean(<?php echo $settings['deleteItems'] ?>),
           'renameItems': Boolean(<?php echo $settings['renameItems'] ?>),
           'moveItems': Boolean(<?php echo $settings['moveItems'] ?>),
           'themeColor': '<?php echo $settings['themeColor'] ?>'
@@ -203,6 +204,16 @@ $directory = $_GET['directory'];
                     <div class='info flex'>
                         <h1>
                           Rename
+                        </h1>
+                    </div>
+                </div>
+                <div class='item faded delete flex' state='<?php echo ($settings['deleteItems']) ? 'true' : 'false' ?>'>
+                    <svg viewBox='0 0 24 24'>
+                        <path fill='#555' d='M19,4H15.5L14.5,3H9.5L8.5,4H5V6H19M6,19A2,2 0 0,0 8,21H16A2,2 0 0,0 18,19V7H6V19Z'></path>
+                    </svg>
+                    <div class='info flex'>
+                        <h1>
+                          Delete
                         </h1>
                     </div>
                 </div>

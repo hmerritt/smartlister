@@ -25,6 +25,10 @@ $settings = [
     'folderCreation' => true,
 
 
+    //  toggle ability to delete files and folders
+    'deleteItems' => true,
+
+
     //  toggle ability to rename files and folders (activate via f2 key)
     'renameItems' => true,
 

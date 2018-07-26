@@ -484,7 +484,7 @@ $(document).ready(function () {
         changeBreadcrums(dirHash);
 
         //  reset rename btn
-        $('.info-items .item.rename').addClass('faded');
+        $('.info-items .item.rename, .info-items .item.delete').addClass('faded');
 
 
         //  encode directory for url
@@ -575,7 +575,7 @@ $(document).ready(function () {
     //  reset object specific click events
     $(document).mouseup(function (e) {
         //  do not run if clicked specific objects
-        if (!$(e.target).closest('.files-container .item:not(.uploading, .new), .contextmenu, .info-items .item.rename').length > 0) {
+        if (!$(e.target).closest('.files-container .item:not(.uploading, .new), .contextmenu, .info-items .item.rename, .info-items .item.delete').length > 0) {
             $('.files-container .item').removeClass('active');
         }
     });
@@ -586,7 +586,7 @@ $(document).ready(function () {
             return false;
         }
         $('.files-container .item').removeClass('active');
-        $('.info-items .item.rename').removeClass('faded');
+        $('.info-items .item.rename, .info-items .item.delete').removeClass('faded');
         $(this).addClass('active');
     });
 
@@ -689,7 +689,7 @@ $(document).ready(function () {
     //  select item
     function selectItem(obj) {
         $(obj).addClass('active');
-        $('.info-items .item.rename').removeClass('faded');
+        $('.info-items .item.rename, .info-items .item.delete').removeClass('faded');
     }
 
     //  select next item in container
@@ -724,12 +724,12 @@ $(document).ready(function () {
     //  reset object specific click events
     $(document).mouseup(function (e) {
         //  do not run if clicked specific objects
-        if (!$(e.target).closest('.info-items .item:not(.storage)').length > 0) {
+        if (!$(e.target).closest('.info-items .item:not(.storage, .delete)').length > 0) {
             $('.info-items .item').removeClass('active');
         }
-        if (!$(e.target).closest('.files-container .item:not(.uploading, .new), .contextmenu, .info-items .item.rename').length > 0) {
+        if (!$(e.target).closest('.files-container .item:not(.uploading, .new), .contextmenu, .info-items .item.rename, .info-items .item.delete').length > 0) {
             $('.files-container .item').removeClass('active');
-            $('.info-items .item.rename').addClass('faded');
+            $('.info-items .item.rename, .info-items .item.delete').addClass('faded');
         }
         if ($(e.target).closest('.info-items .newFolder').length == 0 && $(e.target).closest('.folders .item.new').length == 0) {
             removeNewFolder();
@@ -1154,6 +1154,91 @@ $(document).ready(function () {
             console.error('[Folder] Unable to request a new folder (most likely due to loss of internet)');
         });
     }
+
+
+
+
+
+    //  delete items trigger
+    $(document).on('click', '.info-items .item.delete', function() {
+        if ($('.directory .item.active').length == 1) {
+            deleteItem();
+        }
+    });
+
+    //  delete item
+    function deleteItem() {
+
+
+        //  check settings file
+        if (!settings['deleteItems']) {
+            return false;
+        }
+
+
+        var itemObj = $('.directory .item.active'),
+            name = $(itemObj).find('.name').html(),
+            type = 'file',
+            plType = 'files',
+            dir = directory;
+
+        if ($(itemObj).parent().hasClass('folders')) {
+            type = 'folder';
+            plType = 'folders';
+        }
+
+
+        //  delete item
+        $.ajax({
+            url: settings['listerFolderName'] + '/php/delete.php',
+            type: 'POST',
+            data: {
+                type: type,
+                name: name,
+                directory: dir,
+            },
+            cache: false
+        }).done(function (data) {
+          console.log(data);
+            try {
+                data = JSON.parse(data);
+                if (data['status'] == 'ok') {
+
+
+                    //  remove item in content cache
+                    for (var item in content[md5(dir)][plType]) {
+                        if (content[md5(dir)][plType][item]['name'] == name) {
+                            content[md5(dir)][plType].splice(item, 1);
+                        }
+                    }
+
+                    //  re-sort items
+                    addDirectory(directory);
+
+                    //  report a success to the user
+                    if (type == 'folder') {
+                        toast('Folder deleted', 'tick', 2800);
+                        console.log('[Folder] Folder deleted: ' + name);
+                    } else {
+                        toast('File deleted', 'tick', 2800);
+                        console.log('[File] File deleted: ' + name);
+                    }
+
+
+                } else {
+                    throw 'Server error';
+                }
+            } catch (err) {
+                toast('Item not deleted', 'cross', 4000);
+                console.error('[Item] Unable to delete item (' + err + ')');
+            }
+        }).fail(function () {
+            toast('Item not deleted', 'cross', 4000);
+            console.error('[Item] Unable to request for an item deletion (most likely due to loss of internet)');
+        });
+
+    }
+
 
 
 
