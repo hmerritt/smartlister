@@ -138,6 +138,10 @@ $directory = $_GET['directory'];
        background-color: rgba(<?php echo hexToRgba($settings['themeColor']) ?>, 1);
      }
 
+     .files-container .item .progress {
+       background-color: rgba(<?php echo hexToRgba($settings['themeColor']) ?>, .88);
+     }
+
   </style>
 
 </head>
