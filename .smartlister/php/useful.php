@@ -42,36 +42,26 @@ function human_filesize($bytes, $decimals = 2) {
 }
 
 
-function after ($this, $inthat)
+function after ($char, $string)
   {
-      if (!is_bool(strpos($inthat, $this)))
-      return substr($inthat, strpos($inthat,$this)+strlen($this));
+      if (!is_bool(strpos($string, $char)))
+      return substr($string, strpos($string,$char)+strlen($char));
   };
 
-  function after_last ($this, $inthat)
+  function after_last ($char, $string)
   {
-      if (!is_bool(strrevpos($inthat, $this)))
-      return substr($inthat, strrevpos($inthat, $this)+strlen($this));
+      if (!is_bool(strrevpos($string, $char)))
+      return substr($string, strrevpos($string, $char)+strlen($char));
   };
 
-  function before ($this, $inthat)
+  function before ($char, $string)
   {
-      return substr($inthat, 0, strpos($inthat, $this));
+      return substr($string, 0, strpos($string, $char));
   };
 
-  function before_last ($this, $inthat)
+  function before_last ($char, $string)
   {
-      return substr($inthat, 0, strrevpos($inthat, $this));
-  };
-
-  function between ($this, $that, $inthat)
-  {
-      return before ($that, after($this, $inthat));
-  };
-
-  function between_last ($this, $that, $inthat)
-  {
-   return after_last($this, before_last($that, $inthat));
+      return substr($string, 0, strrevpos($string, $char));
   };
 
 // use strrevpos function in case your php version does not include it

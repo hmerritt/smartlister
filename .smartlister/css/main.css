@@ -90,7 +90,7 @@ a:target {
 }
 
 ::selection {
-  color: #fff;
+  color: #fafafa;
   background-color: #444;
 }
 
@@ -293,6 +293,7 @@ body.palette-blue {
 body {
   font-family: 'Product sans', 'Roboto', arial, sans-serif;
   color: #222;
+  background-color: #fafafa;
 }
 
 
@@ -302,9 +303,10 @@ body {
   top: 0;
   left: 0;
   right: 0;
-  height: 70px;
+  height: 64px;
   z-index: 99;
-  background-color: #80D8FF;
+  border-bottom: 1px solid #ddd;
+  background-color: #fafafa;
 }
 .bar-top.scroll {
   -webkit-box-shadow: 0px 1px 4px 0px rgba(0,0,0, .25);
@@ -323,8 +325,8 @@ body {
 }
 
 .bar-top > .wrapper svg {
-  width: 38px;
-  height: 38px;
+  width: 32px;
+  height: 32px;
   margin: 0 2em;
 }
 .bar-top > .wrapper svg path {
@@ -333,7 +335,7 @@ body {
 
 .bar-top > .wrapper h1 {
   font-weight: 400;
-  font-size: 1.4em;
+  font-size: 1.2em;
   color: #333;
 }
 
@@ -354,7 +356,7 @@ body {
 
 .main-window > .wrapper {
   position: relative;
-  top: 96px;
+  top: 88px;
   padding: 0 10em;
   margin: 0 auto;
 }
@@ -379,21 +381,16 @@ body {
   align-items: center;
   cursor: pointer;
   width: auto;
-  height: 80px;
+  height: 60px;
   margin: 0 .38em;
   padding: 0 1.28em;
   border-radius: 6px;
-  border: 1px solid #ddd;
-  background-color: #FFF;
+  background-color: #fafafa;
   -webkit-transition: all 120ms ease;
      -moz-transition: all 120ms ease;
       -ms-transition: all 120ms ease;
        -o-transition: all 120ms ease;
           transition: all 120ms ease;
-  -webkit-box-shadow: 0px 1px 4px -1px rgba(0,0,0, .28);
-     -moz-box-shadow: 0px 1px 4px -1px rgba(0,0,0, .28);
-      -ms-box-shadow: 0px 1px 4px -1px rgba(0,0,0, .28);
-          box-shadow: 0px 1px 4px -1px rgba(0,0,0, .28);
 }
 
 .info-items .item.storage {
@@ -404,8 +401,8 @@ body {
 .info-items .item svg,
 .info-items .item .img {
   fill: #777;
-  width: 47px;
-  height: 47px;
+  width: 38px;
+  height: 38px;
   border-radius: 7px;
   background-size: cover;
   background-position: center;
@@ -420,7 +417,7 @@ body {
 
 .info-items .item h1 {
   font-family: 'Roboto', arial, sans-serif;
-  font-size: 1em;
+  font-size: 15px;
   margin: 0;
   max-width: 128px;
   overflow: hidden;
@@ -444,7 +441,7 @@ body {
   background-color: rgba(128,216,255, .7);
 }
 .info-items .item.delete.active {
-  background-color: #FFF !important;
+  background-color: #fafafa !important;
 }
 
 
@@ -480,7 +477,7 @@ body {
   overflow-x: -moz-scrollbars-none;
   -webkit-overflow-scrolling: touch;
   -ms-overflow-style: -ms-autohiding-scrollbar;
-  margin-top: 1.2em;
+  margin-top: .2em;
   margin-left: .5em;
   margin-right: .5em;
   padding-bottom: .8em;
@@ -505,7 +502,7 @@ body {
 
 .breadcrums .item h1 {
   font-family: 'Product sans', 'Roboto', arial, sans-serif;
-  font-size: 1.4em;
+  font-size: 1.3em;
   font-weight: 200;
   margin: 0;
   margin-left: .3em;
@@ -548,7 +545,7 @@ body {
 
 .sorting h1 {
   font-family: 'Roboto', arial, sans-serif;
-  font-size: 1.08em;
+  font-size: 15px;
   font-weight: 500;
   margin: 0;
   vertical-align: middle;
@@ -639,10 +636,10 @@ body {
   padding: 0 1.4em;
   cursor: pointer;
   fill: #666;
-  height: 58px;
+  height: 52px;
   overflow: hidden;
   border-radius: 3px;
-  background-color: #fff;
+  background-color: #fafafa;
   border-bottom: 1px solid #eee;
   -webkit-transition: all 120ms ease;
      -moz-transition: all 120ms ease;
@@ -657,6 +654,11 @@ body {
 .files-container .item.active {
   fill: #444;
   background-color: rgba(128,216,255, .5);
+}
+
+.files-container .item .last-modified,
+.files-container .item .size {
+  font-size: 15px;
 }
 
 
@@ -764,7 +766,7 @@ input:focus {
   z-index: -10;
   opacity: 0;
   border-radius: 5px;
-  background-color: #fff;
+  background-color: #fafafa;
   -webkit-box-shadow: 0px 2px 6px 1px rgba(0,0,0, .28);
      -moz-box-shadow: 0px 2px 6px 1px rgba(0,0,0, .28);
       -ms-box-shadow: 0px 2px 6px 1px rgba(0,0,0, .28);
@@ -1129,7 +1131,7 @@ input:focus {
 
 .toast .item {
   display: none;
-  padding: .88em 2.4em;
+  padding: .77em 2.2em;
   margin-top: .77em;
   border-radius: 4px;
   background-color: #444;
@@ -1139,15 +1141,15 @@ input:focus {
   margin: 0;
   font-family: 'Roboto', arial, sans-serif;
   color: #fff;
-  font-size: 1.2em;
+  font-size: 1em;
   font-weight: 500;
   white-space: nowrap;
 }
 
 .toast .item svg {
   fill: #fff;
-  width: 28px;
-  height: 28px;
+  width: 24px;
+  height: 24px;
   margin-right: .6em;
   vertical-align: middle;
 }

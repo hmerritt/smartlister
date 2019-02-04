@@ -42,7 +42,7 @@ $settings = [
     //  red    => '#FF6176'
     //  green  => '#4DFF61'
     //  purple => '#D685FF'
-    //  yellow => '#FFD642'
+    //  yellow => '#FFD46D'
     'themeColor' => '#80D8FF'
 
 

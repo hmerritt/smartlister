@@ -508,8 +508,8 @@ $(document).ready(function () {
 
         //  change page title to current directory
         //  capitalize root directory
-        var newTitle = breadcrums[breadcrums.length-1] + ' | Smartlister';
-        if (newTitle == 'root | Smartlister') newTitle = 'Root | Smartlister';
+        var newTitle = breadcrums[breadcrums.length-1] + '';
+        if (newTitle == 'root') newTitle = 'Root';
         $('head title').html(newTitle);
 
         //  change url (data | title | url)

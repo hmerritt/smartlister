@@ -30,7 +30,7 @@ Lists the contents of any web directory (does not list hidden files and folders)
  - Configuration file `.smartlister/php/settings.php`
 
 ## UI Desktop
-![Context](https://i.imgur.com/9et9Oou.png)
+![Context](https://i.imgur.com/t6ZrPYj.png)
 
 ## UI Mobile
-![Context](https://i.imgur.com/xFoIbqz.png)
+![Context](https://i.imgur.com/RstlDB5.png)

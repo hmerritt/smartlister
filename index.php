@@ -115,7 +115,6 @@ $directory = $_GET['directory'];
   <!--  set theme colors  -->
   <style type='text/css'>
 
-     .bar-top,
      .fab > .item {
        background-color: rgb(<?php echo hexToRgba($settings['themeColor']) ?>);
      }
@@ -127,11 +126,11 @@ $directory = $_GET['directory'];
 
      .files-container .item.active,
      .files-container .directory .item.new {
-       background-color: rgba(<?php echo hexToRgba($settings['themeColor']) ?>, .5);
+       background-color: rgba(<?php echo hexToRgba($settings['themeColor']) ?>, .6);
      }
 
      .info-items .item:not(.storage):hover {
-       background-color: rgba(<?php echo hexToRgba($settings['themeColor']) ?>, .15);
+       background-color: rgba(<?php echo hexToRgba($settings['themeColor']) ?>, .6);
      }
 
      .overlay-upload .icon-cloud,
@@ -153,7 +152,7 @@ $directory = $_GET['directory'];
     <div class='bar-top no-user-select'>
         <div class='wrapper flex'>
             <svg viewBox='0 0 24 24'>
-                <path d='M3,14V4A2,2 0 0,1 5,2H11L13,4H19A2,2 0 0,1 21,6V14A2,2 0 0,1 19,16H13V18H14A1,1 0 0,1 15,19H22V21H15A1,1 0 0,1 14,22H10A1,1 0 0,1 9,21H2V19H9A1,1 0 0,1 10,18H11V16H5A2,2 0 0,1 3,14Z' />
+                <path d='M10,4H4C2.89,4 2,4.89 2,6V18A2,2 0 0,0 4,20H20A2,2 0 0,0 22,18V8C22,6.89 21.1,6 20,6H12L10,4Z' />
             </svg>
             <h1>Smartlister</h1>
         </div>
