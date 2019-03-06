@@ -21,6 +21,14 @@ Lists the contents of any web directory (does not list hidden files and folders)
  - Toggle ability to delete items
  - Toggle ability to move items
  - Change theme colour
+ 
+## TODO
+- A confirm dialog when deleting files
+- Login system using settings file
+- htaccess to deny settings file
+- Improve upload hover screen
+- Select multiple files
+- Check for updates
 
 ## How to use
 ### Install
