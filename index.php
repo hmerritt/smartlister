@@ -85,6 +85,7 @@ $directory = $_GET['directory'];
     <script src='". $settings['listerFolderName'] ."/js/hammer.js' type='text/javascript'></script>
     <script src='". $settings['listerFolderName'] ."/js/moment.js' type='text/javascript'></script>
     <script src='". $settings['listerFolderName'] ."/js/base64.js' type='text/javascript'></script>
+    <script src='". $settings['listerFolderName'] ."/js/micromodal.js' type='text/javascript'></script>
     <script src='". $settings['listerFolderName'] ."/js/md5.js' type='text/javascript'></script>
     <script src='". $settings['listerFolderName'] ."/js/main.js' type='text/javascript'></script>
 
@@ -261,6 +262,31 @@ $directory = $_GET['directory'];
                 </div>
                 -->
             </div>
+
+
+            <!--  delete confirmation pop-up  -->
+            <div class="modal micromodal-slide modal-delete no-user-select" id="modal-delete" aria-hidden="false">
+                <div class="modal__overlay" tabindex="-1" data-micromodal-close>
+                    <div class="modal__container" role="dialog" aria-modal="true" aria-labelledby="modal-delete-title">
+                        <header class="modal__header">
+                            <h2 class="modal__title" id="modal-delete-title">
+                              Delete File
+                            </h2>
+                            <button class="modal__close" aria-label="Close modal" data-micromodal-close></button>
+                        </header>
+                        <main class="modal__content" id="modal-delete-content">
+                            <p>
+                              This will perminantly delete the selected file. This action cannot be undone.
+                            </p>
+                        </main>
+                        <footer class="modal__footer">
+                            <button class="modal__btn modal__btn-primary modal-delete__btn-primary" deleteFile>Delete</button>
+                            <button class="modal__btn" data-micromodal-close aria-label="Close this dialog window">Cancel</button>
+                        </footer>
+                    </div>
+                </div>
+            </div>
+
 
             <!--  file drag to move box  -->
             <div class='drag-to-move flex no-user-select'>

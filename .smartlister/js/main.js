@@ -168,12 +168,20 @@ function fadeIn(obj, type, delay) {
     }, delay);
 }
 
-//  main js
 
+
+
+//  main js
 $(document).ready(function () {
+
 
     window.content = {};
     window.sort = 'asc';
+
+
+    //  init micromodal
+    MicroModal.init();
+
 
     //  sort directory out
     directory = directory;
@@ -257,7 +265,7 @@ $(document).ready(function () {
         //  delete - delete active item
         if (e.which == 46 || e.keyCode == 46) {
             if ($('.directory .item.active').length == 1) {
-                deleteItem();
+                MicroModal.show('modal-delete');
             }
         }
 
@@ -583,7 +591,7 @@ $(document).ready(function () {
     //  reset object specific click events
     $(document).mouseup(function (e) {
         //  do not run if clicked specific objects
-        if (!$(e.target).closest('.files-container .item:not(.uploading, .new), .contextmenu, .info-items .item.rename, .info-items .item.delete').length > 0) {
+        if (!$(e.target).closest('.files-container .item:not(.uploading, .new), .contextmenu, .info-items .item.rename, .info-items .item.delete, button.modal__btn.modal__btn-primary.modal-delete__btn-primary').length > 0) {
             $('.files-container .item').removeClass('active');
         }
     });
@@ -735,7 +743,7 @@ $(document).ready(function () {
         if (!$(e.target).closest('.info-items .item:not(.storage, .delete)').length > 0) {
             $('.info-items .item').removeClass('active');
         }
-        if (!$(e.target).closest('.files-container .item:not(.uploading, .new), .contextmenu, .info-items .item.rename, .info-items .item.delete').length > 0) {
+        if (!$(e.target).closest('.files-container .item:not(.uploading, .new), .contextmenu, .info-items .item.rename, .info-items .item.delete, button.modal__btn.modal__btn-primary.modal-delete__btn-primary').length > 0) {
             $('.files-container .item').removeClass('active');
             $('.info-items .item.rename, .info-items .item.delete').addClass('faded');
         }
@@ -1170,9 +1178,17 @@ $(document).ready(function () {
     //  delete items trigger
     $(document).on('click', '.info-items .item.delete', function() {
         if ($('.directory .item.active').length == 1) {
-            deleteItem();
+            MicroModal.show('modal-delete');
         }
     });
+
+
+    //  confirmation of delete trigger
+    $(document).on('click', '.modal-delete button[deleteFile]', function() {
+        deleteItem();
+        MicroModal.close('modal-delete');
+    });
+
 
     //  delete item
     function deleteItem() {

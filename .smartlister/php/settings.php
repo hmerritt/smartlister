@@ -1,23 +1,36 @@
 <?php
 
 
+/*
 
-//  change default php settings
-ini_set('memory_limit', '800M');
-ini_set('post_max_size', '108M');
-ini_set('upload_max_filesize', '108M');
+ Customizable settings file
 
-
-//  settings
+*/
 $settings = [
 
 
-    //  name of smartlisters folder (default = '.smartlister')
+    //  name of smartlister's folder (default = '.smartlister')
     //  this value should be identical to the first require in index.php (line 38)
     'listerFolderName' => '.smartlister',
 
 
-    //  toggle ability to uplaod files
+	/*
+
+	  change php.ini limits (default = 'default')
+
+	  phpMemoryLimit: amount of memory php is aloud to use for one script
+	  phpPostMaxSize: maximum post size for a php script
+	  phpUploadMaxSize: max file size that can be uploaded
+
+	  example: to change to a 100mb limit - '100M'
+
+	*/
+	'phpMemoryLimit' => 'default',
+	'phpPostMaxSize' => 'default',
+	'phpUploadMaxSize' => 'default',
+
+
+    //  toggle ability to upload files (also drag-and-drop)
     'fileUpload' => true,
 
 
@@ -38,7 +51,7 @@ $settings = [
 
 
     //  change theme color (default = '#80D8FF')
-    //  recomended alternatives
+    //  recommended alternatives
     //  red    => '#FF6176'
     //  green  => '#4DFF61'
     //  purple => '#D685FF'
@@ -47,6 +60,25 @@ $settings = [
 
 
 ];
+
+
+//  change memory_limit in php ini
+if ($settings['phpMemoryLimit'] !== 'default')
+{
+    ini_set('memory_limit', strval($settings['phpMemoryLimit']));
+}
+
+//  change post_max_size in php ini
+if ($settings['phpPostMaxSize'] !== 'default')
+{
+    ini_set('post_max_size', strval($settings['phpPostMaxSize']));
+}
+
+//  change upload_max_filesize in php ini
+if ($settings['phpUploadMaxSize'] !== 'default')
+{
+    ini_set('upload_max_filesize', strval($settings['phpUploadMaxSize']));
+}
 
 
 
