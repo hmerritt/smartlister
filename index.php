@@ -86,6 +86,7 @@ $directory = $_GET['directory'];
     <script src='". $settings['listerFolderName'] ."/js/moment.js' type='text/javascript'></script>
     <script src='". $settings['listerFolderName'] ."/js/base64.js' type='text/javascript'></script>
     <script src='". $settings['listerFolderName'] ."/js/micromodal.js' type='text/javascript'></script>
+    <script src='". $settings['listerFolderName'] ."/js/particles.js' type='text/javascript'></script>
     <script src='". $settings['listerFolderName'] ."/js/md5.js' type='text/javascript'></script>
     <script src='". $settings['listerFolderName'] ."/js/main.js' type='text/javascript'></script>
 
@@ -311,6 +312,7 @@ $directory = $_GET['directory'];
                         <h2>Drop to upload files</h2>
                     </div>
                 </div>
+                <div id='overlay-particles'></div>
             </div>
 
             <!--  download file into page  -->

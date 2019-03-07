@@ -840,7 +840,8 @@ input:focus {
 
 /*  drag n' drop overlay  */
 
-.overlay-upload {
+.overlay-upload,
+#overlay-particles {
   position: fixed;
   flex-wrap: wrap;
   justify-content: center;
@@ -851,7 +852,7 @@ input:focus {
   bottom: 0;
   opacity: 0;
   z-index: -999;
-  background-color: rgba(255,255,255, .82);
+  background-color: rgba(255,255,255, .7);
   -webkit-transition: all 120ms ease;
      -moz-transition: all 120ms ease;
       -ms-transition: all 120ms ease;
@@ -862,6 +863,10 @@ input:focus {
   opacity: 1;
   z-index: 999;
 }
+.overlay-upload.active #overlay-particles {
+  opacity: 1;
+  z-index: 10;
+}
 .overlay-upload.dragdrop .dragdrop {
   display: flex;
 }
@@ -869,6 +874,7 @@ input:focus {
 
 .overlay-upload .dragdrop {
   display: none;
+  z-index: 20;
 }
 
 .overlay-upload .icon-cloud,

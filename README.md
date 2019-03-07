@@ -23,11 +23,10 @@ Lists the contents of any web directory (does not list hidden files and folders)
  - Change theme colour
  
 ## TODO
+- Check for updates automatically
 - Login system using settings file
-- htaccess to deny settings file
-- Improve upload hover screen
 - Select multiple files
-- Check for updates
+- <strike>Improve upload hover screen</strike>
 - <strike>A confirm dialog when deleting files</strike>
 
 ## How to use
