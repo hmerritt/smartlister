@@ -80,14 +80,14 @@ $directory = $_GET['directory'];
   <!--  js  -->
   <?php
   echo "
-    <script src='". $settings['listerFolderName'] ."/js/jquery.js' type='text/javascript'></script>
-    <script src='". $settings['listerFolderName'] ."/js/cookie.js' type='text/javascript'></script>
-    <script src='". $settings['listerFolderName'] ."/js/hammer.js' type='text/javascript'></script>
-    <script src='". $settings['listerFolderName'] ."/js/moment.js' type='text/javascript'></script>
-    <script src='". $settings['listerFolderName'] ."/js/base64.js' type='text/javascript'></script>
-    <script src='". $settings['listerFolderName'] ."/js/micromodal.js' type='text/javascript'></script>
-    <script src='". $settings['listerFolderName'] ."/js/particles.js' type='text/javascript'></script>
-    <script src='". $settings['listerFolderName'] ."/js/md5.js' type='text/javascript'></script>
+    <script src='". $settings['listerFolderName'] ."/js/libs/jquery.js' type='text/javascript'></script>
+    <script src='". $settings['listerFolderName'] ."/js/libs/cookie.js' type='text/javascript'></script>
+    <script src='". $settings['listerFolderName'] ."/js/libs/hammer.js' type='text/javascript'></script>
+    <script src='". $settings['listerFolderName'] ."/js/libs/moment.js' type='text/javascript'></script>
+    <script src='". $settings['listerFolderName'] ."/js/libs/base64.js' type='text/javascript'></script>
+    <script src='". $settings['listerFolderName'] ."/js/libs/micromodal.js' type='text/javascript'></script>
+    <script src='". $settings['listerFolderName'] ."/js/libs/particles.js' type='text/javascript'></script>
+    <script src='". $settings['listerFolderName'] ."/js/libs/md5.js' type='text/javascript'></script>
     <script src='". $settings['listerFolderName'] ."/js/main.js' type='text/javascript'></script>
 
     <!--  css  -->
