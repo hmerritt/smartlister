@@ -1,4 +1,9 @@
 
+
+# prevent user from opening versions/ folder
+RedirectMatch 403 ^/versions/?$
+
+
 # prevent user from opening unneeded php files
 <files "settings.php">
   Order allow,deny
