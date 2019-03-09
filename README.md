@@ -23,9 +23,9 @@ Lists the contents of any web directory (does not list hidden files and folders)
  - Change theme colour
  
 ## TODO
-- Check for updates automatically
 - Login system using settings file
 - Select multiple files
+- <strike>Check for updates automatically</strike>
 - <strike>Improve upload hover screen</strike>
 - <strike>A confirm dialog when deleting files</strike>
 

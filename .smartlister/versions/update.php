@@ -5,7 +5,7 @@
 
 /*
 
-  Script will check for updates via the github repo
+  Script will check for updates via github
   - check current version
   - backup current version before updating
   - download latest version of smartlister and update all files
@@ -16,7 +16,7 @@
 
 
 //  set current version of smartlister
-$version = 2.04;
+$version = 2.06;
 
 
 
@@ -71,6 +71,52 @@ function xcopy($src, $dest)
 
         //  close the directory
         closedir($dir);
+
+
+}
+
+
+
+
+//  copy files while printing out each action
+function copySmartlisterFiles($src, $dest)
+{
+
+
+        //  copy index.php to backup folder
+        echo "\n\n>  copying index.php";
+        copy($src . "/index.php", $dest . "/index.php");
+
+
+        //  copy css files
+        echo "\n>  copying css files";
+        xcopy($src . "/.smartlister/css/", $dest . "/.smartlister/css/");
+
+
+        //  copy js files
+        echo "\n>  copying javascript files";
+        xcopy($src . "/.smartlister/js/", $dest . "/.smartlister/js/");
+
+
+        //  copy fonts files
+        echo "\n>  copying fonts";
+        xcopy($src . "/.smartlister/fonts/", $dest . "/.smartlister/fonts/");
+
+
+        //  copy image files
+        echo "\n>  copying images";
+        xcopy($src . "/.smartlister/img/", $dest . "/.smartlister/img/");
+
+
+        //  copy php files
+        echo "\n>  copying php files";
+        xcopy($src . "/.smartlister/php/", $dest . "/.smartlister/php/");
+
+
+        //  copy .htaccess and favicon
+        echo "\n>  copying .htaccess and favicon";
+        copy($src . "/.smartlister/.htaccess", $dest . "/.smartlister/.htaccess");
+        copy($src . "/.smartlister/favicon.ico", $dest . "/.smartlister/favicon.ico");
 
 
 }
@@ -169,40 +215,8 @@ if (isset($argv[1]))
 
 
 
-                //  copy index.php to backup folder
-                echo "\n\n>  copying index.php";
-                copy("../../index.php", 'backups/'.$version."/index.php");
-
-
-                //  copy css files
-                echo "\n>  copying css files";
-                xcopy("../css/", 'backups/'.$version."/.smartlister/css/");
-
-
-                //  copy js files
-                echo "\n>  copying javascript files";
-                xcopy("../js/", 'backups/'.$version."/.smartlister/js/");
-
-
-                //  copy fonts files
-                echo "\n>  copying fonts";
-                xcopy("../fonts/", 'backups/'.$version."/.smartlister/fonts/");
-
-
-                //  copy image files
-                echo "\n>  copying images";
-                xcopy("../img/", 'backups/'.$version."/.smartlister/img/");
-
-
-                //  copy php files
-                echo "\n>  copying php files";
-                xcopy("../php/", 'backups/'.$version."/.smartlister/php/");
-
-
-                //  copy .htaccess and favicon
-                echo "\n>  copying .htaccess and favicon";
-                copy("../.htaccess", 'backups/'.$version."/.smartlister/.htaccess");
-                copy("../favicon.ico", 'backups/'.$version."/.smartlister/favicon.ico");
+                //  backup all files
+                copySmartlisterFiles('../../', 'backups/'.$version);
 
 
 
@@ -229,8 +243,76 @@ if (isset($argv[1]))
         {
 
 
-                //  check for new versions
-                echo "\n>  it is reccomended that you copy the 'update.php' file from the new version folder as it itself may have been updated";
+                //  print updating smartlister
+                echo "\n>  updating smartlister to the latest version";
+
+
+
+                //  get latest version number
+                echo "\n\n>  fetching latest version number";
+
+
+                //  download latest update.php
+                $latestUpdateFile = file_get_contents("https://raw.githubusercontent.com/Hmerritt/smartlister/master/.smartlister/versions/update.php");
+
+
+
+                //  get latest version number by extracting the version number from update file
+                $latestVersion = (float)strtok(explode('$version = ', $latestUpdateFile, 2)[1], ';');
+
+
+
+                //  compare this version to the latest version
+                if ($version == $latestVersion)
+                {
+
+
+                        //  the script is up-to-date
+                        echo "\n\n>  smartlister is already up-to-date (version ". $latestVersion ." is the latest version)\n";
+
+
+                        //  exit script
+                        die();
+
+
+                }
+
+
+
+                //  print action: creating folder
+                echo "\n>  creating folder for new version";
+
+
+                //  create directory for the latest version
+                @mkdir($latestVersion);
+
+
+
+                //  print action: downloading latest version of smartlister
+                echo "\n>  downloading latest version of smartlister\n\n";
+
+
+                //  download latest version of smartlister using 'git clone'
+                exec("git clone https://github.com/Hmerritt/smartlister $latestVersion");
+
+
+
+                //  copy index.php to backup folder
+                copySmartlisterFiles("$latestVersion", "../../");
+
+
+
+                //  print update complete
+                echo "\n\n>  smartlister has been updated successfully (v". $version ." => v". $latestVersion .")";
+
+
+
+                //  print recommendation
+                echo "\n\n>  it is recommended that you copy the 'update.php' file from the new version folder as it itself may have been updated\n";
+
+
+                //  exit script
+                die();
 
 
         }
@@ -244,7 +326,7 @@ if (isset($argv[1]))
 
 
 //  print version for reference
-echo $version;
+echo 'v' . $version;
 
 
 
