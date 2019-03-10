@@ -385,6 +385,8 @@ $(document).ready(function () {
         }
     });
 
+
+
     //  get folder
     function getFolder(folder) {
         if (typeof content[md5(folder)] === 'undefined' || content[md5(folder)] === null) {
@@ -422,8 +424,11 @@ $(document).ready(function () {
                 //  add items to the page
                 addDirectory(folder);
             }).fail(function () {
-                toast('Unable to get files', 'cross', 4000);
-                console.error('[Files] Unable to request items from folder (most likely due to loss of internet)');
+                setTimeout(function() {
+                    getFolder(folder);
+                }, 1000);
+                toast('Unable to get files', 'cross', 2000);
+                console.error('[Files] Unable to request items from folder; will try again in 1 second (most likely due to loss of internet)');
             });
         } else {
             //  get folder from cache
@@ -435,6 +440,8 @@ $(document).ready(function () {
             }
         }
     }
+
+
 
     //  get starting folder
     getFolder(directory);
