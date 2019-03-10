@@ -16,7 +16,7 @@
 
 
 //  set current version of smartlister
-$version = 2.06;
+$version = json_decode(file_get_contents('version'), true)['version'];
 
 
 
@@ -114,7 +114,8 @@ function copySmartlisterFiles($src, $dest)
 
 
         //  copy .htaccess and favicon
-        echo "\n>  copying .htaccess and favicon";
+        echo "\n>  copying version, .htaccess and favicon";
+        copy($src . "/.smartlister/versions/version", $dest . "/.smartlister/versions/version");
         copy($src . "/.smartlister/.htaccess", $dest . "/.smartlister/.htaccess");
         copy($src . "/.smartlister/favicon.ico", $dest . "/.smartlister/favicon.ico");
 
@@ -252,13 +253,8 @@ if (isset($argv[1]))
                 echo "\n\n>  fetching latest version number";
 
 
-                //  download latest update.php
-                $latestUpdateFile = file_get_contents("https://raw.githubusercontent.com/Hmerritt/smartlister/master/.smartlister/versions/update.php");
-
-
-
-                //  get latest version number by extracting the version number from update file
-                $latestVersion = (float)strtok(explode('$version = ', $latestUpdateFile, 2)[1], ';');
+                //  get latest version number by downloading version file from github
+                $latestVersion = json_decode(file_get_contents('https://raw.githubusercontent.com/Hmerritt/smartlister/master/.smartlister/versions/version'), true)['version'];
 
 
 
