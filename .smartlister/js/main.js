@@ -1,4 +1,4 @@
-"use strict";
+//"use strict";
 
 //  set general functions
 
@@ -810,20 +810,88 @@ $(document).ready(function () {
         });
     }getStorageQuota();
 
+
+
     //  file upload
 
     //  drag & drop
-    //  toggle overlay on drag + add files on drop
+    //  toggle overlay on drag
+    //  toggle overlay on drag
+    function toggleDragDropOverlay(state)
+    {
+
+
+        if (state == 'show')
+        {
+
+            //  show overlay
+			$('.overlay-upload').addClass('active dragdrop');
+
+        } else
+        {
+
+            //  hide overlay
+			$('.overlay-upload').removeClass('active dragdrop');
+
+        }
+
+
+    }
+
+
+
+    //  handle files dragging onto the window
+	var uploadDragCounter = 0;
     $(window).on('drag dragstart dragend dragover dragenter dragleave drop', function (e) {
+		
+		
+		//  prevent the browser from just opening the file
         e.preventDefault();
         e.stopPropagation();
-    }).on('dragover dragenter', function () {
-        $('.overlay-upload').addClass('active dragdrop');
-    }).on('dragleave dragend drop', function () {
-        $('.overlay-upload').removeClass('active dragdrop');
-    }).on('drop', function (e) {
+		
+		
+    }).on('dragenter', function ()
+	{
+		
+		
+        //  show the drag-drop overlay
+        uploadDragCounter++
+        if (uploadDragCounter === 1)
+        {
+
+            toggleDragDropOverlay('show');
+
+        }
+		
+		
+    }).on('dragleave', function ()
+	{
+		
+		
+        //  hide the drag-drop overlay
+        uploadDragCounter--
+        if (uploadDragCounter === 0)
+        {
+
+            toggleDragDropOverlay('hide');
+
+        }
+		
+		
+    }).on('drop', function (e)
+	{
+		
+		
+        //  reset the drag-drop counter and overlay
+        uploadDragCounter = 0;
+        toggleDragDropOverlay('hide');
+
+
+        //  add the dropped files to the upload input
         var droppedFiles = e.originalEvent.dataTransfer.files;
         document.getElementById('upload').files = droppedFiles;
+		
+		
     });
 
     $('input#upload').change(function () {
