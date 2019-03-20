@@ -3,6 +3,7 @@
 
 //  add useful functions
 require 'useful.php';
+require 'settings.php';
 
 
 //  get directory
@@ -56,8 +57,13 @@ foreach ($breadcrums as $breadcrum) {
 //  sepatatings files and folders
 foreach ($scandir as $item) {
 
-    //  skip hidden items
-    if ($item[0] == '.') {continue;}
+    //  skip non-items
+    //  show/hide hidden items
+    if ($item == '.' || $item == '..' || (!$settings['hiddenItems'] && $item[0] == '.'))
+    {
+      continue;
+    }
+
 
     //  if file
     if (is_file($directory . '/' . $item)) {

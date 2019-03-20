@@ -1,9 +1,11 @@
 <?php
 
 
+
+
 /*
 
- Customizable settings file
+  Customizable settings file
 
 */
 $settings = [
@@ -14,20 +16,10 @@ $settings = [
     'listerFolderName' => '.smartlister',
 
 
-	/*
 
-	  change php.ini limits (default = 'default')
+    //  show hidden files/folders
+    'hiddenItems' => true,
 
-	  phpMemoryLimit: amount of memory php is aloud to use for one script
-	  phpPostMaxSize: maximum post size for a php script
-	  phpUploadMaxSize: max file size that can be uploaded
-
-	  example: to change to a 100mb limit - '100M'
-
-	*/
-	'phpMemoryLimit' => 'default',
-	'phpPostMaxSize' => 'default',
-	'phpUploadMaxSize' => 'default',
 
 
     //  toggle ability to upload files (also drag-and-drop)
@@ -50,16 +42,36 @@ $settings = [
     'moveItems' => true,
 
 
+
     //  change theme color (default = '#80D8FF')
     //  recommended alternatives
     //  red    => '#FF6176'
     //  green  => '#4DFF61'
     //  purple => '#D685FF'
     //  yellow => '#FFD46D'
-    'themeColor' => '#80D8FF'
+    'themeColor' => '#80D8FF',
+
+
+
+    /*
+
+  	  change php.ini limits (default = 'default')
+
+  	  phpMemoryLimit: amount of memory php is aloud to use for one script
+  	  phpPostMaxSize: maximum post size for a php script
+  	  phpUploadMaxSize: max file size that can be uploaded
+
+  	  example: to change to a 100mb limit - '100M'
+
+  	*/
+  	'phpMemoryLimit' => 'default',
+  	'phpPostMaxSize' => 'default',
+  	'phpUploadMaxSize' => 'default'
 
 
 ];
+
+
 
 
 //  change memory_limit in php ini
