@@ -3,8 +3,13 @@ A light-weight and customizable directory lister powered by PHP.
 
 
 ## How to use
+
+### Prerequisites
+- Functioning web-sever
+- PHP7
+
 ### Install
- - Drag `index.php` and `.smartlister` to any web directory
+ - Drag `index.php` and `.smartlister` to any web directory (that's it!)
 
 ### Settings
  - Configuration file `.smartlister/php/settings.php`
@@ -34,13 +39,7 @@ In the settings file you can enable/disable the following;
  - Change theme colour
 
 ## TODO
-- Improve update script
-- Select multiple files
-- Login system using settings file
-- ~~Show hidden files/folders~~
-- ~~Check for updates~~
-- ~~Improve upload hover screen~~
-- ~~A confirm dialog when deleting files~~
+[Development roadmap (Trello)](https://trello.com/b/eafRAZtt/smartlister)
 
 ## UI Desktop
 ![Context](https://i.imgur.com/t6ZrPYj.png)
