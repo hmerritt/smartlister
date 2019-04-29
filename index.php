@@ -154,10 +154,18 @@ $directory = $_GET['directory'];
     <!--  top bar  -->
     <div class='bar-top no-user-select'>
         <div class='wrapper flex'>
-            <svg viewBox='0 0 24 24'>
+            <svg viewBox='0 0 24 24' class='banner-icon'>
                 <path d='M10,4H4C2.89,4 2,4.89 2,6V18A2,2 0 0,0 4,20H20A2,2 0 0,0 22,18V8C22,6.89 21.1,6 20,6H12L10,4Z' />
             </svg>
             <h1><?php echo $settings["mainTitle"] ?></h1>
+
+            <!--  search bar  -->
+            <div class='search-bar flex'>
+                <svg viewBox="0 0 24 24" class='search-icon'>
+                    <path fill="#444" d="M9.5,3A6.5,6.5 0 0,1 16,9.5C16,11.11 15.41,12.59 14.44,13.73L14.71,14H15.5L20.5,19L19,20.5L14,15.5V14.71L13.73,14.44C12.59,15.41 11.11,16 9.5,16A6.5,6.5 0 0,1 3,9.5A6.5,6.5 0 0,1 9.5,3M9.5,5C7,5 5,7 5,9.5C5,12 7,14 9.5,14C12,14 14,12 14,9.5C14,7 12,5 9.5,5Z" />
+                </svg>
+                <input class='search' type="text" placeholder="Type to search...">
+            </div>
         </div>
     </div>
 
