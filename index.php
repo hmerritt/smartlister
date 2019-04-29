@@ -68,7 +68,7 @@ $directory = $_GET['directory'];
   <meta name='viewport' content='width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no'>
 
   <!--  set title + icon  -->
-  <title> Smartlister </title>
+  <title> Root - <?php echo $settings['mainTitle'] ?> </title>
   <link type='x-image/icon' rel='icon' href='<?php echo $settings['listerFolderName'] ?>/favicon.ico'>
 
 
@@ -103,6 +103,7 @@ $directory = $_GET['directory'];
 
       //  set users settings
       window.settings = {
+          'mainTitle': '<?php echo $settings['mainTitle'] ?>',
           'listerFolderName': '<?php echo $settings['listerFolderName'] ?>',
           'fileUpload': Boolean(<?php echo $settings['fileUpload'] ?>),
           'folderCreation': Boolean(<?php echo $settings['folderCreation'] ?>),
@@ -156,7 +157,7 @@ $directory = $_GET['directory'];
             <svg viewBox='0 0 24 24'>
                 <path d='M10,4H4C2.89,4 2,4.89 2,6V18A2,2 0 0,0 4,20H20A2,2 0 0,0 22,18V8C22,6.89 21.1,6 20,6H12L10,4Z' />
             </svg>
-            <h1>Smartlister</h1>
+            <h1><?php echo $settings["mainTitle"] ?></h1>
         </div>
     </div>
 
