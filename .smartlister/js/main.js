@@ -533,7 +533,7 @@ $(document).ready(function () {
         //  capitalize root directory
         var newTitle = breadcrums[breadcrums.length-1] + '';
         if (newTitle == 'root') newTitle = 'Root';
-        $('head title').html(newTitle);
+        $('head title').html(newTitle +" - "+ settings['mainTitle']);
 
         //  change url (data | title | url)
         window.history.pushState(newTitle, newTitle, 'index.php?directory=' + urlDirectory);

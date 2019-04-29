@@ -11,9 +11,9 @@
 $settings = [
 
 
-    //  name of smartlister's folder (default = '.smartlister')
-    //  this value should be identical to the first require in index.php (line 38)
-    'listerFolderName' => '.smartlister',
+
+    //  the default title at the top of the page (default = 'Smartlister')
+    'mainTitle' => 'Smartlister',
 
 
 
@@ -50,6 +50,12 @@ $settings = [
     //  purple => '#D685FF'
     //  yellow => '#FFD46D'
     'themeColor' => '#80D8FF',
+
+
+
+    //  name of smartlister's folder (default = '.smartlister')
+    //  this value should be identical to the first require in index.php (line 38)
+    'listerFolderName' => '.smartlister',
 
 
 
