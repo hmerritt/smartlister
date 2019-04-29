@@ -381,9 +381,9 @@ body {
   align-items: center;
   cursor: pointer;
   width: auto;
-  height: 60px;
+  height: 55px;
   margin: 0 .38em;
-  padding: 0 1.28em;
+  padding: 0 1.1em;
   border-radius: 6px;
   background-color: #fafafa;
   -webkit-transition: all 120ms ease;
@@ -401,8 +401,8 @@ body {
 .info-items .item svg,
 .info-items .item .img {
   fill: #777;
-  width: 38px;
-  height: 38px;
+  width: 34px;
+  height: 34px;
   border-radius: 7px;
   background-size: cover;
   background-position: center;
@@ -497,6 +497,10 @@ body {
 
 .breadcrums .item:first-child {
   text-transform: capitalize;
+}
+
+.breadcrums .item:hover {
+  background-color: #ededed;
 }
 
 
