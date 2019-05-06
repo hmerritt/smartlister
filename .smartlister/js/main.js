@@ -191,6 +191,8 @@ $(document).ready(function () {
     MicroModal.init();
 
 
+
+
     //  sort directory out
     directory = directory;
     if (directory == null || directory == undefined) {
@@ -735,7 +737,7 @@ $(document).ready(function () {
     }
 
     //  scroll recently uploaded files + breadcrums
-    $('.info-items, .breadcrums').mousewheel(function (e, delta) {
+    $(".info-items, .breadcrums").on("mousewheel", function (e, delta) {
         this.scrollLeft -= delta * 60;
         e.preventDefault();
     });
@@ -850,17 +852,17 @@ $(document).ready(function () {
 
 
     //  handle files dragging onto the window
-	var uploadDragCounter = 0;
+    var uploadDragCounter = 0;
     $(window).on('drag dragstart dragend dragover dragenter dragleave drop', function (e) {
 
 
-		//  prevent the browser from just opening the file
+		    //  prevent the browser from just opening the file
         e.preventDefault();
         e.stopPropagation();
 
 
     }).on('dragenter', function ()
-	{
+    {
 
 
         //  show the drag-drop overlay
@@ -874,7 +876,7 @@ $(document).ready(function () {
 
 
     }).on('dragleave', function ()
-	{
+	  {
 
 
         //  hide the drag-drop overlay
@@ -888,7 +890,7 @@ $(document).ready(function () {
 
 
     }).on('drop', function (e)
-	{
+	  {
 
 
         //  reset the drag-drop counter and overlay
@@ -901,9 +903,13 @@ $(document).ready(function () {
         document.getElementById('upload').files = droppedFiles;
 
 
+        //  force a 'change' trigger in the input value
+        $('#upload').trigger('change');
+
+
     });
 
-    $('input#upload').change(function () {
+    $(document).on("change", "#upload", function() {
         triggerUpload();
     });
 
