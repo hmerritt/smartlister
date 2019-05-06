@@ -191,6 +191,8 @@ $(document).ready(function () {
     MicroModal.init();
 
 
+
+
     //  sort directory out
     directory = directory;
     if (directory == null || directory == undefined) {
@@ -735,7 +737,7 @@ $(document).ready(function () {
     }
 
     //  scroll recently uploaded files + breadcrums
-    $('.info-items, .breadcrums').mousewheel(function (e, delta) {
+    $(".info-items, .breadcrums").on("mousewheel", function (e, delta) {
         this.scrollLeft -= delta * 60;
         e.preventDefault();
     });
@@ -850,17 +852,17 @@ $(document).ready(function () {
 
 
     //  handle files dragging onto the window
-	var uploadDragCounter = 0;
+    var uploadDragCounter = 0;
     $(window).on('drag dragstart dragend dragover dragenter dragleave drop', function (e) {
 
 
-		//  prevent the browser from just opening the file
+		    //  prevent the browser from just opening the file
         e.preventDefault();
         e.stopPropagation();
 
 
     }).on('dragenter', function ()
-	{
+    {
 
 
         //  show the drag-drop overlay
@@ -874,7 +876,7 @@ $(document).ready(function () {
 
 
     }).on('dragleave', function ()
-	{
+	  {
 
 
         //  hide the drag-drop overlay
@@ -888,7 +890,7 @@ $(document).ready(function () {
 
 
     }).on('drop', function (e)
-	{
+	  {
 
 
         //  reset the drag-drop counter and overlay
@@ -901,9 +903,13 @@ $(document).ready(function () {
         document.getElementById('upload').files = droppedFiles;
 
 
+        //  force a 'change' trigger in the input value
+        $('#upload').trigger('change');
+
+
     });
 
-    $('input#upload').change(function () {
+    $(document).on("change", "#upload", function() {
         triggerUpload();
     });
 
@@ -1863,6 +1869,131 @@ $(document).ready(function () {
 
     //  initialise particles.js
     particlesJS('overlay-particles', {"particles":{"number":{"value":120,"density":{"enable":true,"value_area":800}},"color":{"value":"#555555"},"shape":{"type":"circle","stroke":{"width":0,"color":"#000000"},"polygon":{"nb_sides":5},"image":{"src":"img/github.svg","width":100,"height":100}},"opacity":{"value":1,"random":true,"anim":{"enable":true,"speed":1,"opacity_min":0,"sync":false}},"size":{"value":2,"random":true,"anim":{"enable":false,"speed":4,"size_min":0.3,"sync":false}},"line_linked":{"enable":false,"distance":150,"color":"#ffffff","opacity":0.4,"width":1},"move":{"enable":true,"speed":5,"direction":"top","random":true,"straight":false,"out_mode":"out","bounce":false,"attract":{"enable":false,"rotateX":600,"rotateY":600}}},"interactivity":{"detect_on":"canvas","events":{"onhover":{"enable":true,"mode":"bubble"},"onclick":{"enable":false,"mode":"repulse"},"resize":true},"modes":{"grab":{"distance":400,"line_linked":{"opacity":1}},"bubble":{"distance":250,"size":0,"duration":2,"opacity":0,"speed":3},"repulse":{"distance":400,"duration":0.4},"push":{"particles_nb":4},"remove":{"particles_nb":2}}},"retina_detect":true});
+
+
+
+
+    //  search bar
+    //  change search-bar appearance once clicked
+    //  click anywhere to focus onto the search input
+    $(document).on('click', '.bar-top .search-bar', function() {
+        $(this).find('input').focus();
+    });
+
+
+    //  toggle shaddow to search bar on focus
+    $(document).on('focus', '.bar-top .search-bar input', function() {
+        $(this).parent().addClass('active');
+    });
+    $(document).on('focusout', '.bar-top .search-bar input', function() {
+        $(this).parent().removeClass('active');
+    });
+
+
+    //  when typing in search input
+    //  record when a user is typing
+    var searchIsTyping = 0;
+    $(document).on('keyup', '.bar-top .search-bar input', function() {
+
+      //  record the number of this key pressed
+      var typed = searchIsTyping;
+
+      //  wait for .2 of a second
+      setTimeout(function() {
+
+          //  check if the user has stopped typing
+          //  compare the latest key pressed to the recorded one
+          if ((searchIsTyping-1) == typed) {
+
+              //  search what is in the input
+              search();
+
+          }
+
+      }, 288);
+
+      //  increment the
+      searchIsTyping += 1;
+
+    });
+
+
+
+
+    //  perform a search
+    function search(text)
+    {
+
+
+        //  get search text
+        //  get current directory
+        //  search is performed from the current directory onwards
+        var text = $(".bar-top .search-bar input").val(),
+            currentDirectory = directory;
+
+
+        //  send text to be searched
+        $.ajax({
+            url: settings['listerFolderName'] + '/php/search.php',
+            type: 'POST',
+            data: {
+                text: text,
+                directory: currentDirectory,
+            },
+            cache: false
+        }).done(function (data) {
+
+
+          console.log(data);
+
+            /*
+            try {
+
+                data = JSON.parse(data);
+                if (data['status'] == 'ok') {
+
+
+                    //  remove item in content cache
+                    for (var item in content[md5(dir)][plType]) {
+                        if (content[md5(dir)][plType][item]['name'] == name) {
+                            content[md5(dir)][plType].splice(item, 1);
+                        }
+                    }
+
+                    //  re-sort items
+                    addDirectory(directory);
+
+                    //  report a success to the user
+                    if (type == 'folder') {
+                        toast('Folder deleted', 'tick', 2800);
+                        console.log('[Folder] Folder deleted: ' + name);
+                    } else {
+                        toast('File deleted', 'tick', 2800);
+                        console.log('[File] File deleted: ' + name);
+                    }
+
+
+                } else {
+                    throw 'Server error';
+                }
+
+            } catch (err) {
+                addDirectory(directory);
+                toast('Unable to perform search', 'cross', 4000);
+                console.error('[Item] Unable to search for item (' + err + ')');
+            }
+            */
+
+
+        }).fail(function () {
+            //addDirectory(directory);
+            toast('Unable to perform search', 'cross', 4000);
+            console.error('[Search] Unable to request for the search (most likely due to loss of internet)');
+        });
+
+
+    }
+
 
 
 

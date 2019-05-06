@@ -9,6 +9,7 @@ require 'settings.php';
 //  get directory
 $directory = realpath( '../../' . getDirectory('actual') );
 $path = getDirectory('path');
+$searchQuery = $_POST['text'];
 $pathHash = md5($path);
 
 
@@ -26,11 +27,13 @@ if (getDirectory('path') == 'root') {
 
 //  create response
 $response = [
-  $pathHash => [
-    'directory' => getDirectory('path'),
-    'breadcrums' => $breadcrums,
-    'folders' => [],
-    'files' => []
+  "search" => [
+      $pathHash => [
+        'directory' => getDirectory('path'),
+        'breadcrums' => $breadcrums,
+        'folders' => [],
+        'files' => []
+      ]
   ],
   'status' => 'ok'
 ];
@@ -53,6 +56,25 @@ foreach ($breadcrums as $breadcrum) {
 }
 
 
+
+
+//  loop directory
+//  sepatatings files and folders
+function scanDirectory($scandir)
+{
+
+
+    foreach ($scandir as $item)
+    {
+
+        
+
+    }
+
+
+}
+
+
 //  loop directory
 //  sepatatings files and folders
 foreach ($scandir as $item) {
@@ -68,12 +90,19 @@ foreach ($scandir as $item) {
     //  if file
     if (is_file($directory . '/' . $item)) {
 
-
         //  hide smartlister files
         if (getDirectory('path') == 'root' &&
             $item == 'index.php') {
             continue;
         }
+
+
+        //  search
+        if (wildcard_match($item, $searchQuery) !== 1)
+        {
+            continue;
+        }
+
 
         //  file link
         $actualLink = $directory . '/' . $item;
@@ -83,7 +112,7 @@ foreach ($scandir as $item) {
         $finfo = finfo_open(FILEINFO_MIME_TYPE);
         $type = finfo_file($finfo, $actualLink);
 
-        $response[$pathHash]['files'][] = [
+        $response['search'][$pathHash]['files'][] = [
           'name' => $item,
           'type' => $type,
           'size' => human_filesize(filesize($actualLink)),
@@ -94,12 +123,12 @@ foreach ($scandir as $item) {
 
     } elseif (is_dir($directory . '/' . $item)) {
 
-
         //  hide smartlister files
         if (getDirectory('path') == 'root' &&
             $item == '.smartlister') {
             continue;
         }
+
 
         //  folder link
         $actualLink = $directory . '/' . $item;
@@ -112,7 +141,7 @@ foreach ($scandir as $item) {
         }
 
         //  if folder
-        $response[$pathHash]['folders'][] = [
+        $response['search'][$pathHash]['folders'][] = [
           'name' => $item,
           'link' => $link,
           'modified' => $modified

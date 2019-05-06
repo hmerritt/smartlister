@@ -72,4 +72,25 @@ function strrevpos($instr, $needle)
   else return strlen($instr) - $rev_pos - strlen($needle);
 };
 
+
+
+
+function wildcard_match($pattern, $subject) {
+  // quotemeta function has most similar behavior,
+  // it escapes \.+*?^$[](), but doesn't escape |{}/'#
+  // we don't include * and ?
+  $special_chars = "\.+^$[]()|{}/'#";
+  $special_chars = str_split($special_chars);
+  $escape = array();
+  foreach ($special_chars as $char) $escape[$char] = "\\$char";
+  $pattern = strtr($pattern, $escape);
+  $pattern = strtr($pattern, array(
+    '*' => '.*?', // 0 or more (lazy) - asterisk (*)
+    '?' => '.', // 1 character - question mark (?)
+  ));
+  return preg_match("/$pattern/", $subject);
+}
+
+
+
 ?>
