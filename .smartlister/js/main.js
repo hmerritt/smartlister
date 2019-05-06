@@ -939,7 +939,7 @@ $(document).ready(function () {
 
         var files = document.getElementById('upload').files;
         var file = files[fileNumber];
-        var fileName = file.name.replace(/[|&;$%@"<>()+,]/g, '');
+        var fileName = file.name;
 
         var formData = new FormData();
         formData.append('file', file, fileName);
@@ -1192,7 +1192,7 @@ $(document).ready(function () {
     function newFolder(name) {
 
         //  replace illegal characters
-        name = name.replace(/[^a-z0-9._\-\!\#\[\]\=\+\;\:\~\(\)\^]/gi, '');
+        name = name.replace(/[^a-z0-9._\-\!\#\[\]\=\+\;\:\~\(\)\$\&\^]/gi, '');
 
         //  check if folder exists
         var isDuplicate = false;
