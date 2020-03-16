@@ -907,6 +907,7 @@ $(document).ready(function() {
                     window.location.origin +
                     window.location.pathname.replace(/[\\\/][^\\\/]*$/, "") +
                     Base64.decode($(this).attr("link"));
+                dlink = dlink.replace(/([^:])(\/\/+)/g, '$1/');
                 window.open(dlink);
             } catch (err) {
                 console.error("[Download] Unable to open file");
