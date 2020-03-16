@@ -18,7 +18,7 @@ if (!isset($_FILES['file']) || !isset($settings)) {
 
 //  get file info
 clearstatcache();
-$name = preg_replace('/[^a-zA-Z0-9\-\._ ]/', '', $_FILES['file']['name']);
+$name = $_FILES['file']['name'];
 $tmpName = $_FILES['file']['tmp_name'];
 $size = filesize($tmpName);
 
