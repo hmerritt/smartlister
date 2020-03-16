@@ -904,6 +904,7 @@ $(document).ready(function() {
         function(e) {
             try {
                 var dlink =
+                    window.location.origin +
                     window.location.pathname.replace(/[\\\/][^\\\/]*$/, "") +
                     Base64.decode($(this).attr("link"));
                 window.open(dlink);
